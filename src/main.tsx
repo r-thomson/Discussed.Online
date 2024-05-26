@@ -35,7 +35,7 @@ app.get('/', async (c: Context) => {
 		<Document>
 			<h1>Discussed.Online</h1>
 			<p>
-				Discussions for <b>{url}</b>:
+				Discussions for <b>{url.toString()}</b>:
 			</p>
 			<ul>
 				{discussions.map((d) => (
