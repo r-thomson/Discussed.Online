@@ -10,7 +10,8 @@ export interface Discussion {
 }
 
 export async function getDiscussions(searchUrl: URL): Promise<Discussion[]> {
-	const trimmedSearchUrl = searchUrl.hostname + searchUrl.pathname;
+	const trimmedSearchUrl = searchUrl.hostname + searchUrl.pathname +
+		searchUrl.search;
 
 	const discussions: Discussion[] = await Promise.all([
 		searchReddit(`url:${trimmedSearchUrl}`, {
