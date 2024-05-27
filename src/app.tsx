@@ -84,4 +84,4 @@ app.get(
 	},
 );
 
-Deno.serve(app.fetch);
+export default app;

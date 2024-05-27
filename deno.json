@@ -4,7 +4,7 @@
 		"hono/": "https://deno.land/x/hono@v4.3.11/"
 	},
 	"tasks": {
-		"start": "deno run --allow-net src/main.tsx"
+		"start": "deno run --allow-net main.ts"
 	},
 	"fmt": {
 		"useTabs": true,
