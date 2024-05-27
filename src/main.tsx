@@ -3,12 +3,13 @@
 
 import { type Context, Hono, TrieRouter } from 'hono/mod.ts';
 import { getDiscussions } from './discussions.ts';
-import { Fragment, jsx } from 'hono/middleware.ts';
-import { jsxRenderer } from 'hono/middleware.ts';
+import { Fragment, jsx, jsxRenderer, logger } from 'hono/middleware.ts';
 
 const app = new Hono({
 	router: new TrieRouter(),
 });
+
+app.use(logger());
 
 app.use(jsxRenderer(({ children }) => (
 	<html lang='en-US'>
