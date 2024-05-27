@@ -1,20 +1,39 @@
 /** @jsx jsx */
+/** @jsxFrag Fragment */
+
 import { type Context, Hono, TrieRouter } from 'hono/mod.ts';
 import { getDiscussions } from './discussions.ts';
-import { html } from 'hono/helper.ts';
-import { jsx } from 'hono/middleware.ts';
+import { Fragment, jsx } from 'hono/middleware.ts';
+import { jsxRenderer } from 'hono/middleware.ts';
 
 const app = new Hono({
 	router: new TrieRouter(),
 });
+
+app.use(jsxRenderer(({ children }) => (
+	<html lang='en-US'>
+		<head>
+			<meta charset='utf-8' />
+			<meta
+				name='viewport'
+				content='width=device-width,initial-scale=1'
+			/>
+			<meta name='color-scheme' content='light dark' />
+			<title>discussed.online</title>
+		</head>
+		<body>
+			{children}
+		</body>
+	</html>
+)));
 
 app.get('/', async (c: Context) => {
 	let url;
 	try {
 		url = new URL(c.req.query('url') ?? '');
 	} catch {
-		return c.html(
-			<Document>
+		return c.render(
+			<>
 				<h1>Discussed.Online</h1>
 				<form action='/'>
 					<input
@@ -25,14 +44,14 @@ app.get('/', async (c: Context) => {
 					/>
 					<button type='submit'>Go!</button>
 				</form>
-			</Document>,
+			</>,
 		);
 	}
 
 	const discussions = await getDiscussions(url);
 
-	return c.html(
-		<Document>
+	return c.render(
+		<>
 			<h1>Discussed.Online</h1>
 			<p>
 				Discussions for <b>{url.toString()}</b>:
@@ -50,7 +69,7 @@ app.get('/', async (c: Context) => {
 					</li>
 				))}
 			</ul>
-		</Document>,
+		</>,
 	);
 });
 
@@ -65,19 +84,3 @@ app.get(
 );
 
 Deno.serve(app.fetch);
-
-const Document = (props: { children?: unknown }) =>
-	html`
-	<!doctype html>
-	<html lang="en-US">
-	<head>
-		<meta charset="utf-8">
-		<meta content="width=device-width,initial-scale=1" name="viewport">
-		<meta name="color-scheme" content="light dark">
-		<title>discussed.online</title>
-	</head>
-	<body>
-		${props.children}
-	</body>
-	</html>
-	`;
