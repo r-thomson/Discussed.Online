@@ -54,6 +54,16 @@ app.get('/', async (c: Context) => {
 	);
 });
 
+app.get(
+	'/:url{https?://[a-zA-Z0-9:.@-]+\\.[a-zA-Z0-9]+\\b.*}',
+	(c: Context) => {
+		const reqUrl = new URL(c.req.url);
+		const params = new URLSearchParams();
+		params.set('url', reqUrl.pathname.slice(1) + reqUrl.search);
+		return c.redirect('/?' + params.toString());
+	},
+);
+
 Deno.serve(app.fetch);
 
 const Document = (props: { children?: unknown }) =>
