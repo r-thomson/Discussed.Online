@@ -1,5 +1,5 @@
 import { AcceptedPlugin } from 'postcss/lib/postcss.js';
-import { createMiddleware } from 'hono/helper.ts';
+import { createMiddleware } from 'hono/factory';
 import autoprefixer from 'autoprefixer';
 import postcss from 'postcss/mod.js';
 import tailwindcss from 'tailwindcss';

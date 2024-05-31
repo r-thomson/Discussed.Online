@@ -1,16 +1,10 @@
-/** @jsx jsx */
-/** @jsxFrag Fragment */
-
-import { type Context, Hono, TrieRouter } from 'hono/mod.ts';
 import { getDiscussions } from './discussions.ts';
-import {
-	Fragment,
-	jsx,
-	jsxRenderer,
-	logger,
-	serveStatic,
-} from 'hono/middleware.ts';
+import { jsxRenderer } from 'hono/jsx-renderer';
+import { logger } from 'hono/logger';
 import { postcssMiddleware } from './styles/postcss.ts';
+import { serveStatic } from 'hono/deno';
+import { TrieRouter } from 'hono/router/trie-router';
+import { type Context, Hono } from 'hono';
 import Document from './Document.tsx';
 
 const app = new Hono({

@@ -1,7 +1,4 @@
-/** @jsx jsx */
-
-import type { PropsWithChildren } from 'hono/jsx/types.ts';
-import { jsx } from 'hono/middleware.ts';
+import type { PropsWithChildren } from 'hono/jsx';
 
 export default ({ children }: PropsWithChildren) => (
 	<html lang='en-US'>

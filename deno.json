@@ -2,7 +2,7 @@
 	"$schema": "https://deno.land/x/deno/cli/schemas/config-file.v1.json",
 	"imports": {
 		"autoprefixer": "npm:autoprefixer@10.4.19",
-		"hono/": "https://deno.land/x/hono@v4.3.11/",
+		"hono": "jsr:@hono/hono@^4.4.2",
 		"postcss/": "https://deno.land/x/postcss@8.4.16/",
 		"tailwindcss": "npm:tailwindcss@3.4.3"
 	},
@@ -13,5 +13,9 @@
 		"useTabs": true,
 		"indentWidth": 4,
 		"singleQuote": true
+	},
+	"compilerOptions": {
+		"jsx": "precompile",
+		"jsxImportSource": "hono/jsx"
 	}
 }
