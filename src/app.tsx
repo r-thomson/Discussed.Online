@@ -3,7 +3,14 @@
 
 import { type Context, Hono, TrieRouter } from 'hono/mod.ts';
 import { getDiscussions } from './discussions.ts';
-import { Fragment, jsx, jsxRenderer, logger } from 'hono/middleware.ts';
+import {
+	Fragment,
+	jsx,
+	jsxRenderer,
+	logger,
+	serveStatic,
+} from 'hono/middleware.ts';
+import { postcssMiddleware } from './styles/postcss.ts';
 
 const app = new Hono({
 	router: new TrieRouter(),
@@ -21,12 +28,20 @@ app.use(jsxRenderer(({ children }) => (
 			/>
 			<meta name='color-scheme' content='light dark' />
 			<title>discussed.online</title>
+			<link href='/styles/tailwind.css' rel='stylesheet' />
 		</head>
 		<body>
 			{children}
 		</body>
 	</html>
 )));
+
+// Unfortunately /styles/*.css does not work
+app.use(
+	'/styles/:_{.+\\.css}',
+	postcssMiddleware,
+	serveStatic({ root: './src/' }),
+);
 
 app.get('/', async (c: Context) => {
 	let url;
