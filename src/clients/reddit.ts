@@ -10,7 +10,7 @@ export async function searchLinks(
 	query: string,
 	options: SearchOptions,
 ): Promise<Results> {
-	const url = new URL('https://www.reddit.com/search.json');
+	const url = new URL('https://old.reddit.com/search.json');
 	url.searchParams.set('q', query);
 	if (options.sort) {
 		url.searchParams.set('sort', options.sort);
