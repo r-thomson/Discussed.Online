@@ -29,7 +29,10 @@ export async function searchLinks(
 	}
 
 	const response = await fetch(url);
-	if (response.status !== 200) throw Error(response.statusText);
+	if (response.status !== 200) {
+		console.error(await response.text());
+		throw Error(response.statusText);
+	}
 
 	return await response.json() as Results;
 }
