@@ -12,7 +12,7 @@ export default ({ children }: PropsWithChildren) => (
 			<title>discussed.online</title>
 			<link href='/styles/tailwind.css' rel='stylesheet' />
 		</head>
-		<body>
+		<body class='bg-white text-gray-900'>
 			{children}
 		</body>
 	</html>
