@@ -61,7 +61,13 @@ app.get('/', async (c: Context) => {
 					{discussions.length}{' '}
 					{pluralize(discussions.length, 'discussion', 'discussions')}
 					{' for '}
-					<strong>{url.hostname}{url.pathname}{url.search}</strong>:
+					<a href={url.href} class='underline'>
+						<strong>
+							{url.hostname}
+							{url.pathname}
+							{url.search}
+						</strong>
+					</a>:
 				</p>
 				<ul class='divide-y divide-gray-200 '>
 					{discussions.map((d) => (
