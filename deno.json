@@ -7,7 +7,7 @@
 		"tailwindcss": "npm:tailwindcss@3.4.3"
 	},
 	"tasks": {
-		"start": "deno run --allow-env --allow-net --allow-read --allow-sys --watch main.ts"
+		"start": "deno run --allow-env --allow-net --allow-read --allow-sys --env --watch main.ts"
 	},
 	"fmt": {
 		"useTabs": true,
