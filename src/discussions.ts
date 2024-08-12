@@ -9,12 +9,33 @@ export interface Discussion {
 	numComments: number;
 }
 
-export async function getDiscussions(searchUrl: URL): Promise<Discussion[]> {
-	const trimmedSearchUrl = searchUrl.hostname + searchUrl.pathname +
-		searchUrl.search;
+function getRedditSearch(url: URL): string {
+	if (url.hostname === 'www.youtube.com' && url.searchParams.get('v')) {
+		const v = url.searchParams.get('v');
+		return `url:${v} (site:youtube.com OR site:youtu.be)`;
+	}
+	if (url.hostname === 'youtu.be') {
+		const v = url.pathname;
+		return `url:${v} (site:youtube.com OR site:youtu.be)`;
+	}
+	return 'url:' + url.hostname + url.pathname + url.search;
+}
 
+function getHackerNewsSearch(url: URL): string {
+	if (url.hostname === 'www.youtube.com' && url.searchParams.get('v')) {
+		const v = url.searchParams.get('v');
+		return `youtube.com/watch?v=${v}`;
+	}
+	if (url.hostname === 'youtu.be') {
+		const v = url.pathname;
+		return `youtube.com/watch?v=${v}`;
+	}
+	return url.hostname + url.pathname + url.search;
+}
+
+export async function getDiscussions(searchUrl: URL): Promise<Discussion[]> {
 	const discussions: Discussion[] = await Promise.all([
-		searchReddit(`url:${trimmedSearchUrl}`, {
+		searchReddit(getRedditSearch(searchUrl), {
 			sort: 'comments',
 		}).then((data) =>
 			data.data.children.map((child) => ({
@@ -25,7 +46,7 @@ export async function getDiscussions(searchUrl: URL): Promise<Discussion[]> {
 				numComments: child.data.num_comments,
 			}))
 		),
-		searchHackerNews(trimmedSearchUrl, {
+		searchHackerNews(getHackerNewsSearch(searchUrl), {
 			restrictSearchableAttributes: 'url',
 			ordering: 'popularity',
 		}).then((data) =>
