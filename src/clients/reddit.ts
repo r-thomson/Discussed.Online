@@ -1,4 +1,4 @@
-import { basicAuth } from '../utils.ts';
+import { AsyncLock, basicAuth } from '../utils.ts';
 
 interface AccessTokenResponse {
 	access_token: string;
@@ -23,7 +23,7 @@ class AccessTokenCache {
 	private cache: { token: string; expiresAt: number } | null = null;
 
 	getCached(): string | undefined {
-		if (this.cache && this.cache.expiresAt < Date.now()) {
+		if (this.cache && this.cache.expiresAt > Date.now()) {
 			return this.cache.token;
 		}
 	}
@@ -35,10 +35,7 @@ class AccessTokenCache {
 		};
 	}
 
-	async getToken(): Promise<string> {
-		const cachedToken = this.getCached();
-		if (cachedToken) return cachedToken;
-
+	private async fetchAccessToken(): Promise<AccessTokenResponse> {
 		const { clientId, clientSecret } = this;
 		const response = await fetch(
 			'https://www.reddit.com/api/v1/access_token',
@@ -56,11 +53,21 @@ class AccessTokenCache {
 		);
 
 		if (response.status !== 200) throw Error(response.statusText);
+		return await response.json() as AccessTokenResponse;
+	}
 
-		const tokenResponse: AccessTokenResponse = await response.json();
-		this.setCache(tokenResponse);
+	private readonly lock = new AsyncLock();
 
-		return tokenResponse.access_token;
+	getToken(): Promise<string> {
+		return this.lock.acquire(async () => {
+			const cachedToken = this.getCached();
+			if (cachedToken) return cachedToken;
+
+			const tokenResponse = await this.fetchAccessToken();
+			this.setCache(tokenResponse);
+
+			return tokenResponse.access_token;
+		});
 	}
 }
 
