@@ -91,4 +91,8 @@ app.get(
 	},
 );
 
+app.get('/healthz', (c: Context) => {
+	return c.text("Damn... I'm looking good!");
+});
+
 export default app;
