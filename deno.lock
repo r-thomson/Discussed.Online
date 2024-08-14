@@ -2,9 +2,12 @@
   "version": "3",
   "packages": {
     "specifiers": {
-      "jsr:@hono/hono@^4.4.2": "jsr:@hono/hono@4.4.2",
+      "jsr:@hono/hono@4.4.2": "jsr:@hono/hono@4.4.2",
       "jsr:@std/assert@1.0.2": "jsr:@std/assert@1.0.2",
+      "jsr:@std/async@^1.0.2": "jsr:@std/async@1.0.3",
+      "jsr:@std/data-structures@^1.0.1": "jsr:@std/data-structures@1.0.1",
       "jsr:@std/internal@^1.0.1": "jsr:@std/internal@1.0.1",
+      "jsr:@std/testing@1.0.0": "jsr:@std/testing@1.0.0",
       "npm:autoprefixer@10.4.19": "npm:autoprefixer@10.4.19_postcss@8.4.38",
       "npm:tailwindcss@3.4.3": "npm:tailwindcss@3.4.3_postcss@8.4.38"
     },
@@ -18,8 +21,21 @@
           "jsr:@std/internal@^1.0.1"
         ]
       },
+      "@std/async@1.0.3": {
+        "integrity": "6ed64678db43451683c6c176a21426a2ccd21ba0269ebb2c36133ede3f165792"
+      },
+      "@std/data-structures@1.0.1": {
+        "integrity": "e4fa6bcc33839979ac118e2746f349cd7b57c58bd3036b5b82ac608771ee856e"
+      },
       "@std/internal@1.0.1": {
         "integrity": "6f8c7544d06a11dd256c8d6ba54b11ed870aac6c5aeafff499892662c57673e6"
+      },
+      "@std/testing@1.0.0": {
+        "integrity": "27cfc06392c69c2acffe54e6d0bcb5f961cf193f519255372bd4fff1481bfef8",
+        "dependencies": [
+          "jsr:@std/async@^1.0.2",
+          "jsr:@std/data-structures@^1.0.1"
+        ]
       }
     },
     "npm": {
@@ -808,8 +824,9 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@hono/hono@^4.4.2",
+      "jsr:@hono/hono@4.4.2",
       "jsr:@std/assert@1.0.2",
+      "jsr:@std/testing@1.0.0",
       "npm:autoprefixer@10.4.19",
       "npm:tailwindcss@3.4.3"
     ]
