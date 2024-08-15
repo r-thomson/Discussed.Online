@@ -1,7 +1,7 @@
-FROM denoland/deno:1.44.0
+FROM denoland/deno:1.45.5
 
-# The port that your application listens to.
-EXPOSE 8000
+ARG PORT=8000
+EXPOSE $PORT
 
 WORKDIR /app
 
