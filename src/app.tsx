@@ -1,21 +1,20 @@
-import { getDiscussions } from './discussions.ts';
+import { type Context, Hono } from 'hono';
+import { serveStatic } from 'hono/deno';
 import { jsxRenderer } from 'hono/jsx-renderer';
 import { logger } from 'hono/logger';
-import { postcssMiddleware } from './styles/postcss.ts';
-import { serveStatic } from 'hono/deno';
 import { TrieRouter } from 'hono/router/trie-router';
-import { type Context, Hono } from 'hono';
+import { DiscussionItem } from './components/DiscussionItem.tsx';
 import Document from './components/Document.tsx';
 import { UrlForm } from './components/UrlForm.tsx';
+import { getDiscussions } from './discussions.ts';
+import { postcssMiddleware } from './styles/postcss.ts';
 import { pluralize } from './utils.ts';
-import { DiscussionItem } from './components/DiscussionItem.tsx';
 
 const app = new Hono({
 	router: new TrieRouter(),
 });
 
 app.use(logger());
-
 app.use(jsxRenderer(Document));
 
 // Unfortunately /styles/*.css does not work
