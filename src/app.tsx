@@ -57,7 +57,7 @@ app.get('/', async (c: Context) => {
 				</div>
 			</header>
 			<main class='max-w-4xl mx-auto px-4 sm:px-8 py-4'>
-				<p class='pb-4 text-sm text-center'>
+				<p class='pb-4 text-sm text-center truncate'>
 					{discussions.length}{' '}
 					{pluralize(discussions.length, 'discussion', 'discussions')}
 					{' for '}
