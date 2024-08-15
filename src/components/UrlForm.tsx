@@ -13,7 +13,7 @@ const Input = ({ value }: InputProps) => (
 		required
 		aria-label='URL'
 		placeholder='Paste a URL here&hellip;'
-		class='flex-1 appearance-none px-3 py-1.5 text-base sm:text-sm sm:leading-6 bg-white text-gray-800 placeholder:text-gray-400 rounded-l-md border border-gray-300 outline-none focus:outline-2 focus:outline-blue-800 focus:-outline-offset-2'
+		class='flex-1 appearance-none px-3 py-1.5 text-base sm:text-sm sm:leading-6 bg-white text-gray-800 placeholder:text-gray-400 rounded-none rounded-l-md border border-gray-300 outline-none focus:outline-2 focus:outline-blue-800 focus:-outline-offset-2'
 	/>
 );
 
