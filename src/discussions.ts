@@ -9,6 +9,8 @@ export interface Discussion {
 	numComments: number;
 }
 
+const TWITTER_SITES = ['twitter.com', 'x.com'];
+
 function getRedditSearch(url: URL): string {
 	if (url.hostname === 'www.youtube.com' && url.searchParams.get('v')) {
 		const v = url.searchParams.get('v');
@@ -17,6 +19,14 @@ function getRedditSearch(url: URL): string {
 	if (url.hostname === 'youtu.be') {
 		const v = url.pathname;
 		return `url:${v} (site:youtube.com OR site:youtu.be)`;
+	}
+	if (TWITTER_SITES.includes(url.hostname)) {
+		const match = url.pathname.match(/\w+\/status\/(\d+)\b/);
+		if (match) {
+			return `url:${match[1]} (${
+				TWITTER_SITES.map((s) => 'site:' + s).join(' OR ')
+			})`;
+		}
 	}
 	return 'url:' + url.hostname + url.pathname + url.search;
 }
@@ -29,6 +39,12 @@ function getHackerNewsSearch(url: URL): string {
 	if (url.hostname === 'youtu.be') {
 		const v = url.pathname;
 		return `youtube.com/watch?v=${v}`;
+	}
+	if (TWITTER_SITES.includes(url.hostname)) {
+		const match = url.pathname.match(/\/(\w+)\/status\/(\d+)\b/);
+		if (match) {
+			return `/${match[1]}/status/${match[2]}/`;
+		}
 	}
 	return url.hostname + url.pathname + url.search;
 }
