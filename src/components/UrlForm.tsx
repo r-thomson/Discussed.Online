@@ -5,16 +5,27 @@ interface InputProps {
 	value?: string;
 }
 
-const Input = ({ value }: InputProps) => (
-	<input
-		type='url'
-		value={value}
-		name='url'
-		required
-		aria-label='URL'
-		placeholder='Paste a URL here&hellip;'
-		class='flex-1 appearance-none px-3 py-1.5 text-base sm:text-sm sm:leading-6 bg-white text-gray-800 placeholder:text-gray-400 rounded-none rounded-l-md border border-gray-300 outline-none focus:outline-2 focus:outline-blue-800 focus:-outline-offset-2'
-	/>
+const Input = (props: InputProps) => (
+	<>
+		<input
+			type='url'
+			name='url'
+			required
+			aria-label='URL'
+			placeholder='Paste a URL here&hellip;'
+			class='flex-1 appearance-none px-3 py-1.5 text-base sm:text-sm sm:leading-6 bg-white text-gray-800 placeholder:text-gray-400 rounded-none rounded-l-md border border-gray-300 outline-none focus:outline-2 focus:outline-blue-800 focus:-outline-offset-2'
+			{...props}
+		/>
+		{html`
+		<script>
+			document.currentScript.previousElementSibling.addEventListener('change', (event) => {
+				if (event.target.validity.typeMismatch) {
+					event.target.value = 'https://' + event.target.value;
+				}
+			});
+		</script>
+		`}
+	</>
 );
 
 const ArrowRightIcon = (props: object) => (
