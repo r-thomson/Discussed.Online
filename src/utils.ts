@@ -1,3 +1,5 @@
+import { encodeBase64 } from '@std/encoding/base64';
+
 /**
  * Synchronization tool for ensuring that only one piece of asynchronous
  * code can run at a time.
@@ -50,7 +52,7 @@ interface CallbackWithResolvers<T> {
 }
 
 export function basicAuth(userId: string, password: string): string {
-	return 'Basic ' + btoa(userId + ':' + password);
+	return 'Basic ' + encodeBase64(userId + ':' + password);
 }
 
 export function pluralize(
