@@ -1,5 +1,4 @@
 import { type Context, Hono } from 'hono';
-import { serveStatic } from 'hono/deno';
 import { jsxRenderer } from 'hono/jsx-renderer';
 import { logger } from 'hono/logger';
 import { TrieRouter } from 'hono/router/trie-router';
@@ -7,7 +6,7 @@ import { DiscussionItem } from './components/DiscussionItem.tsx';
 import Document from './components/Document.tsx';
 import { UrlForm } from './components/UrlForm.tsx';
 import { getDiscussions } from './discussions.ts';
-import { postcssMiddleware } from './styles/postcss.ts';
+import { serveAssets } from './assets.ts';
 import { pluralize } from './utils.ts';
 
 const app = new Hono({
@@ -17,12 +16,7 @@ const app = new Hono({
 app.use(logger());
 app.use(jsxRenderer(Document));
 
-// Unfortunately /styles/*.css does not work
-app.use(
-	'/styles/:_{.+\\.css}',
-	postcssMiddleware,
-	serveStatic({ root: './src/' }),
-);
+app.get('styles/*', serveAssets);
 
 app.get('/', async (c: Context) => {
 	let url;

@@ -1,4 +1,5 @@
 import type { PropsWithChildren } from 'hono/jsx';
+import { manifest } from '../assets.ts';
 
 export default ({ children }: PropsWithChildren) => (
 	<html lang='en-US'>
@@ -10,7 +11,10 @@ export default ({ children }: PropsWithChildren) => (
 			/>
 			<meta name='color-scheme' content='light dark' />
 			<title>discussed.online</title>
-			<link href='/styles/tailwind.css' rel='stylesheet' />
+			<link
+				href={'/' + manifest['styles/tailwind.css']}
+				rel='stylesheet'
+			/>
 		</head>
 		<body class='bg-white text-gray-900'>
 			{children}
