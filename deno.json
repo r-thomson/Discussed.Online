@@ -9,6 +9,7 @@
 		"autoprefixer": "npm:autoprefixer@10.4.19",
 		"hono": "jsr:@hono/hono@4.4.2",
 		"postcss/": "https://deno.land/x/postcss@8.4.16/",
+		"redis": "npm:redis@4.7.0",
 		"tailwindcss": "npm:tailwindcss@3.4.3"
 	},
 	"tasks": {
