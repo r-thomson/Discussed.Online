@@ -34,11 +34,11 @@ function makeRedditQuery(url: URL): string {
 function makeHackerNewsQuery(url: URL): string {
 	if (url.hostname === 'www.youtube.com' && url.searchParams.get('v')) {
 		const v = url.searchParams.get('v');
-		return `youtube.com/watch?v=${v}`;
+		return `youtube.com ${v}`;
 	}
 	if (url.hostname === 'youtu.be') {
 		const v = url.pathname;
-		return `youtube.com/watch?v=${v}`;
+		return `youtube.com ${v}`;
 	}
 	if (TWITTER_SITES.includes(url.hostname)) {
 		const match = url.pathname.match(/\/(\w+)\/status\/(\d+)\b/);
