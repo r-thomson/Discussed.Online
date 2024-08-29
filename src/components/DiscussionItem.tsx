@@ -1,4 +1,5 @@
 import { type Discussion as Discussion } from '../discussions.ts';
+import { pluralize } from '../utils.ts';
 
 interface DiscussionItemProps {
 	discussion: Discussion;
@@ -27,12 +28,11 @@ export const DiscussionItem = ({ discussion }: DiscussionItemProps) => {
 					{discussion.numComments} comments
 				</a>
 				{' on '}
-				<span
-					class={`inline-block px-1 ${siteColor}`}
-				>
+				<span class={`inline-block px-1 ${siteColor}`}>
 					{discussion.siteName}
 				</span>{' '}
-				({discussion.score} points)
+				({discussion.score.toLocaleString('en-US')}{' '}
+				{pluralize(discussion.score, 'point', 'points')})
 			</p>
 		</div>
 	);
