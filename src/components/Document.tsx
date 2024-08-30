@@ -15,6 +15,7 @@ export default ({ children }: PropsWithChildren) => (
 				href={'/' + manifest['styles/tailwind.css']}
 				rel='stylesheet'
 			/>
+			<meta name='description' content='Find discussions for any URL.' />
 		</head>
 		<body class='bg-white text-gray-900'>
 			{children}
