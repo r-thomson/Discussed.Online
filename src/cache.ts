@@ -23,14 +23,17 @@ export async function cacheResult<T>(
 
 	const result = await callback();
 
-	try {
-		await deadline(
-			redis.SET(cacheKey, JSON.stringify(result), { EX: expiresIn }),
-			CACHE_TIMEOUT_MS,
-		);
-	} catch (error) {
-		console.error('Cache set error', error);
-	}
+	// Don't block the caller while setting the cache
+	(async () => {
+		try {
+			await deadline(
+				redis.SET(cacheKey, JSON.stringify(result), { EX: expiresIn }),
+				CACHE_TIMEOUT_MS,
+			);
+		} catch (error) {
+			console.error('Cache set error', error);
+		}
+	})();
 
 	return result;
 }
