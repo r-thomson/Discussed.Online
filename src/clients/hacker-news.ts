@@ -1,3 +1,5 @@
+import { cacheResult } from '../cache.ts';
+
 interface SearchOptions {
 	ordering?: 'popularity' | 'date';
 	numericFilters?: string;
@@ -31,10 +33,16 @@ export async function searchStories(
 		);
 	}
 
-	const response = await fetch(url);
-	if (response.status !== 200) throw Error(response.statusText);
+	return await cacheResult('cache:' + url.href, 10 * 60, async () => {
+		const response = await fetch(url, {
+			headers: {
+				'Accept': 'application/json',
+			},
+		});
+		if (response.status !== 200) throw Error(response.statusText);
 
-	return await response.json() as Results;
+		return await response.json() as Results;
+	});
 }
 
 export interface Results {

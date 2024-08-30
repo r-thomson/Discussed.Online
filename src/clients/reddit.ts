@@ -1,3 +1,4 @@
+import { cacheResult } from '../cache.ts';
 import { AsyncLock, basicAuth } from '../utils.ts';
 
 interface AccessTokenResponse {
@@ -106,16 +107,18 @@ export async function searchLinks(
 		url.searchParams.set('limit', options.limit.toString());
 	}
 
-	const response = await fetch(url, {
-		headers: {
-			'Accept': 'application/json',
-			'Authorization': 'Bearer ' + await accessTokens.getToken(),
-			'User-Agent': 'discussed.online',
-		},
-	});
-	if (response.status !== 200) throw Error(response.statusText);
+	return await cacheResult('cache:' + url.href, 10 * 60, async () => {
+		const response = await fetch(url, {
+			headers: {
+				'Accept': 'application/json',
+				'Authorization': 'Bearer ' + await accessTokens.getToken(),
+				'User-Agent': 'discussed.online',
+			},
+		});
+		if (response.status !== 200) throw Error(response.statusText);
 
-	return await response.json() as Results;
+		return await response.json() as Results;
+	});
 }
 
 export interface Results {

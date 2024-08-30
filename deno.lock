@@ -4,6 +4,7 @@
     "specifiers": {
       "jsr:@hono/hono@4.4.2": "jsr:@hono/hono@4.4.2",
       "jsr:@std/assert@1.0.2": "jsr:@std/assert@1.0.2",
+      "jsr:@std/async@1.0.4": "jsr:@std/async@1.0.4",
       "jsr:@std/async@^1.0.2": "jsr:@std/async@1.0.3",
       "jsr:@std/data-structures@^1.0.1": "jsr:@std/data-structures@1.0.1",
       "jsr:@std/encoding": "jsr:@std/encoding@1.0.1",
@@ -13,6 +14,7 @@
       "jsr:@std/path@1.0.2": "jsr:@std/path@1.0.2",
       "jsr:@std/path@^1.0.2": "jsr:@std/path@1.0.2",
       "jsr:@std/testing@1.0.0": "jsr:@std/testing@1.0.0",
+      "npm:@types/node": "npm:@types/node@18.16.19",
       "npm:autoprefixer@10.4.19": "npm:autoprefixer@10.4.19_postcss@8.4.38",
       "npm:redis@4.7.0": "npm:redis@4.7.0_@redis+client@1.6.0",
       "npm:tailwindcss@3.4.3": "npm:tailwindcss@3.4.3_postcss@8.4.38"
@@ -29,6 +31,9 @@
       },
       "@std/async@1.0.3": {
         "integrity": "6ed64678db43451683c6c176a21426a2ccd21ba0269ebb2c36133ede3f165792"
+      },
+      "@std/async@1.0.4": {
+        "integrity": "373f5168a01b46ecaabc785d4e0f9ef18a010ab867af069fb905d93a9129ae5b"
       },
       "@std/data-structures@1.0.1": {
         "integrity": "e4fa6bcc33839979ac118e2746f349cd7b57c58bd3036b5b82ac608771ee856e"
@@ -158,6 +163,10 @@
         "dependencies": {
           "@redis/client": "@redis/client@1.6.0"
         }
+      },
+      "@types/node@18.16.19": {
+        "integrity": "sha512-IXl7o+R9iti9eBW4Wg2hx1xQDig183jj7YLn8F7udNceyfkbn1ZxmzZXuak20gR40D7pIkIY1kYGx5VIGbaHKA==",
+        "dependencies": {}
       },
       "ansi-regex@5.0.1": {
         "integrity": "sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==",
@@ -905,6 +914,7 @@
     "dependencies": [
       "jsr:@hono/hono@4.4.2",
       "jsr:@std/assert@1.0.2",
+      "jsr:@std/async@1.0.4",
       "jsr:@std/encoding@1.0.1",
       "jsr:@std/fs@1.0.1",
       "jsr:@std/path@1.0.2",
