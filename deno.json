@@ -2,16 +2,16 @@
 	"$schema": "https://deno.land/x/deno/cli/schemas/config-file.v1.json",
 	"imports": {
 		"@std/async": "jsr:@std/async@1.0.4",
-		"@std/assert": "jsr:@std/assert@1.0.2",
-		"@std/encoding": "jsr:@std/encoding@1.0.1",
-		"@std/fs": "jsr:@std/fs@1.0.1",
-		"@std/path": "jsr:@std/path@1.0.2",
-		"@std/testing": "jsr:@std/testing@1.0.0",
-		"autoprefixer": "npm:autoprefixer@10.4.19",
-		"hono": "jsr:@hono/hono@4.4.2",
+		"@std/assert": "jsr:@std/assert@1.0.3",
+		"@std/encoding": "jsr:@std/encoding@1.0.3",
+		"@std/fs": "jsr:@std/fs@1.0.2",
+		"@std/path": "jsr:@std/path@1.0.3",
+		"@std/testing": "jsr:@std/testing@1.0.1",
+		"autoprefixer": "npm:autoprefixer@10.4.20",
+		"hono": "jsr:@hono/hono@4.5.9",
 		"postcss/": "https://deno.land/x/postcss@8.4.16/",
 		"redis": "npm:redis@4.7.0",
-		"tailwindcss": "npm:tailwindcss@3.4.3"
+		"tailwindcss": "npm:tailwindcss@3.4.10"
 	},
 	"tasks": {
 		"start": "deno run --allow-env --allow-net --allow-read --allow-write --allow-sys --env --watch main.ts",
