@@ -1,14 +1,44 @@
+import type { DiscussionSite } from './types.ts';
 import { cacheResult } from '../cache.ts';
 
-interface SearchOptions {
-	ordering?: 'popularity' | 'date';
-	numericFilters?: string;
-	page?: number;
-	hitsPerPage?: number;
-	restrictSearchableAttributes?: string;
+export default {
+	name: 'Hacker News',
+
+	async getDiscussionsForUrl(url: URL) {
+		const data = await searchStories(makeHackerNewsQuery(url), {
+			restrictSearchableAttributes: 'url',
+			ordering: 'popularity',
+		});
+
+		return data.hits.map((hit) => ({
+			siteName: 'Hacker News',
+			title: hit.title,
+			url: 'https://www.hackerneue.com/item?id=' + hit.objectID,
+			score: hit.points,
+			numComments: hit.num_comments,
+		}));
+	},
+} satisfies DiscussionSite;
+
+function makeHackerNewsQuery(url: URL): string {
+	if (url.hostname === 'www.youtube.com' && url.searchParams.get('v')) {
+		const v = url.searchParams.get('v');
+		return `youtube.com ${v}`;
+	}
+	if (url.hostname === 'youtu.be') {
+		const v = url.pathname;
+		return `youtube.com ${v}`;
+	}
+	if (['twitter.com', 'x.com'].includes(url.hostname)) {
+		const match = url.pathname.match(/\/(\w+)\/status\/(\d+)\b/);
+		if (match) {
+			return `/${match[1]}/status/${match[2]}/`;
+		}
+	}
+	return url.hostname + url.pathname + url.search;
 }
 
-export async function searchStories(
+async function searchStories(
 	query: string,
 	options: SearchOptions,
 ): Promise<Results> {
@@ -45,7 +75,15 @@ export async function searchStories(
 	});
 }
 
-export interface Results {
+interface SearchOptions {
+	ordering?: 'popularity' | 'date';
+	numericFilters?: string;
+	page?: number;
+	hitsPerPage?: number;
+	restrictSearchableAttributes?: string;
+}
+
+interface Results {
 	hits: StoryHit[];
 	page: number;
 	nbHits: number;
@@ -56,7 +94,7 @@ export interface Results {
 	params: string;
 }
 
-export interface StoryHit {
+interface StoryHit {
 	author: string;
 	created_at: string;
 	created_at_i: number;

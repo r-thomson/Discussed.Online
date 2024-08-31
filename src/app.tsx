@@ -5,9 +5,9 @@ import { TrieRouter } from 'hono/router/trie-router';
 import { DiscussionItem } from './components/DiscussionItem.tsx';
 import Document from './components/Document.tsx';
 import { UrlForm } from './components/UrlForm.tsx';
-import { getDiscussions } from './discussions.ts';
 import { serveAssets } from './assets.ts';
 import { pluralize } from './utils.ts';
+import * as discussionSites from './discussions/sites.ts';
 
 const app = new Hono({
 	router: new TrieRouter(),
@@ -54,7 +54,13 @@ app.get('/', async (c: Context) => {
 		);
 	}
 
-	const discussions = await getDiscussions(url);
+	const discussions = (await Promise.allSettled(
+		Object.values(discussionSites).map((discussionSite) =>
+			discussionSite.getDiscussionsForUrl(url)
+		),
+	)).filter((result) => result.status === 'fulfilled')
+		.flatMap((result) => result.value)
+		.sort((a, b) => b.numComments - a.numComments);
 
 	return c.render(
 		<>

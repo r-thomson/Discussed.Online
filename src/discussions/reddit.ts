@@ -1,5 +1,45 @@
+import type { DiscussionSite } from './types.ts';
 import { cacheResult } from '../cache.ts';
 import { AsyncLock, basicAuth } from '../utils.ts';
+
+export default {
+	name: 'Reddit',
+
+	async getDiscussionsForUrl(url: URL) {
+		const data = await searchLinks(makeRedditQuery(url), {
+			sort: 'comments',
+		});
+
+		return data.data.children.map((child) => ({
+			siteName: child.data.subreddit_name_prefixed,
+			title: child.data.title,
+			url: 'https://www.reddit.com' + child.data.permalink,
+			score: child.data.score,
+			numComments: child.data.num_comments,
+		}));
+	},
+} satisfies DiscussionSite;
+
+function makeRedditQuery(url: URL): string {
+	if (url.hostname === 'www.youtube.com' && url.searchParams.get('v')) {
+		const v = url.searchParams.get('v');
+		return `url:${v} (site:youtube.com OR site:youtu.be)`;
+	}
+	if (url.hostname === 'youtu.be') {
+		const v = url.pathname;
+		return `url:${v} (site:youtube.com OR site:youtu.be)`;
+	}
+	const TWITTER_SITES = ['twitter.com', 'x.com'];
+	if (TWITTER_SITES.includes(url.hostname)) {
+		const match = url.pathname.match(/\w+\/status\/(\d+)\b/);
+		if (match) {
+			return `url:${match[1]} (${
+				TWITTER_SITES.map((s) => 'site:' + s).join(' OR ')
+			})`;
+		}
+	}
+	return 'url:' + url.hostname + url.pathname + url.search;
+}
 
 interface AccessTokenResponse {
 	access_token: string;
@@ -77,15 +117,7 @@ const accessTokens = new AccessTokenCache(
 	Deno.env.get('REDDIT_CLIENT_SECRET') ?? '',
 );
 
-interface SearchOptions {
-	sort?: 'relevance' | 'hot' | 'top' | 'new' | 'comments';
-	t?: 'hour' | 'day' | 'week' | 'month' | 'year' | 'all';
-	after?: string;
-	before?: string;
-	limit?: number;
-}
-
-export async function searchLinks(
+async function searchLinks(
 	query: string,
 	options: SearchOptions,
 ): Promise<Results> {
@@ -121,7 +153,15 @@ export async function searchLinks(
 	});
 }
 
-export interface Results {
+interface SearchOptions {
+	sort?: 'relevance' | 'hot' | 'top' | 'new' | 'comments';
+	t?: 'hour' | 'day' | 'week' | 'month' | 'year' | 'all';
+	after?: string;
+	before?: string;
+	limit?: number;
+}
+
+interface Results {
 	kind: 'Listing';
 	data: {
 		after: string;
@@ -132,7 +172,7 @@ export interface Results {
 	};
 }
 
-export interface LinkHit {
+interface LinkHit {
 	kind: 't3';
 	data: {
 		author: string | null;

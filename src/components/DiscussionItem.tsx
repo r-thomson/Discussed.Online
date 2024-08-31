@@ -1,4 +1,4 @@
-import { type Discussion as Discussion } from '../discussions.ts';
+import type { Discussion } from '../discussions/types.ts';
 import { pluralize } from '../utils.ts';
 
 interface DiscussionItemProps {
