@@ -6,9 +6,11 @@ interface DiscussionItemProps {
 }
 
 export const DiscussionItem = ({ discussion }: DiscussionItemProps) => {
-	// TODO: pass a site-specific identifier instead
+	// TODO: move styling information to the DiscussionSite object
 	const siteColor = discussion.siteName === 'Hacker News'
 		? 'bg-orange-400 text-white'
+		: discussion.siteName === 'Lobsters'
+		? 'bg-red-800 text-white'
 		: discussion.siteName.startsWith('r/')
 		? 'bg-orange-600 text-white'
 		: '';
