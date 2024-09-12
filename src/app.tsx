@@ -2,8 +2,9 @@ import { Hono } from 'hono';
 import { jsxRenderer } from 'hono/jsx-renderer';
 import { logger } from 'hono/logger';
 import { TrieRouter } from 'hono/router/trie-router';
-import Document from './components/Document.tsx';
+import { trimTrailingSlash } from 'hono/trailing-slash';
 import { serveAssets } from './assets.ts';
+import Document from './components/Document.tsx';
 import healthz from './routes/healthz.ts';
 import index from './routes/index.tsx';
 
@@ -12,6 +13,7 @@ const app = new Hono({
 });
 
 app.use(logger());
+app.use(trimTrailingSlash());
 app.use(jsxRenderer(Document));
 
 app.route('/', index);
