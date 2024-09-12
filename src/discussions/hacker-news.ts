@@ -21,7 +21,13 @@ export default {
 } satisfies DiscussionSite;
 
 function makeHackerNewsQuery(url: URL): string {
-	if (url.hostname === 'www.youtube.com' && url.searchParams.get('v')) {
+	if (
+		[
+			'youtube.com',
+			'www.youtube.com',
+			'm.youtube.com',
+		].includes(url.hostname) && url.searchParams.get('v')
+	) {
 		const v = url.searchParams.get('v');
 		return `youtube.com ${v}`;
 	}
