@@ -53,6 +53,7 @@ async function searchStories(
 
 	url.searchParams.set('query', query);
 	url.searchParams.set('tags', 'story');
+	url.searchParams.set('typoTolerance', 'false');
 	if (options.numericFilters) {
 		url.searchParams.set('numericFilters', options.numericFilters);
 	}
