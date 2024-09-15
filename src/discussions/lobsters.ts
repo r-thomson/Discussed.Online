@@ -4,8 +4,13 @@ import { cacheResult } from '../cache.ts';
 export default {
 	name: 'Lobsters',
 
-	async getDiscussionsForUrl(url: URL) {
-		const stories = await getStoriesByUrl(url.href);
+	searchBuilderVisitor: {
+		default: ({ url }) => url.href,
+	},
+
+	async getDiscussionsForUrl(match) {
+		const query = match.visit(this.searchBuilderVisitor);
+		const stories = await getStoriesByUrl(query);
 
 		// The API doesn't seem to support any built-in sorting
 		stories.sort((a, b) => b.comment_count - a.comment_count);

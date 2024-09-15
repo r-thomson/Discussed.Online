@@ -5,8 +5,15 @@ import { AsyncLock, basicAuth } from '../utils.ts';
 export default {
 	name: 'Reddit',
 
-	async getDiscussionsForUrl(url: URL) {
-		const data = await searchLinks(makeRedditQuery(url), {
+	searchBuilderVisitor: {
+		visitTweet: ({ id }) => `url:${id} (site:twitter.com OR site:x.com)`,
+		visitYouTube: ({ v }) => `url:${v} (site:youtube.com OR site:youtu.be)`,
+		default: ({ url }) => 'url:' + url.hostname + url.pathname + url.search,
+	},
+
+	async getDiscussionsForUrl(match) {
+		const query = match.visit(this.searchBuilderVisitor);
+		const data = await searchLinks(query, {
 			sort: 'comments',
 		});
 
@@ -19,33 +26,6 @@ export default {
 		}));
 	},
 } satisfies DiscussionSite;
-
-function makeRedditQuery(url: URL): string {
-	if (
-		[
-			'youtube.com',
-			'www.youtube.com',
-			'm.youtube.com',
-		].includes(url.hostname) && url.searchParams.get('v')
-	) {
-		const v = url.searchParams.get('v');
-		return `url:${v} (site:youtube.com OR site:youtu.be)`;
-	}
-	if (url.hostname === 'youtu.be') {
-		const v = url.pathname;
-		return `url:${v} (site:youtube.com OR site:youtu.be)`;
-	}
-	const TWITTER_SITES = ['twitter.com', 'x.com'];
-	if (TWITTER_SITES.includes(url.hostname)) {
-		const match = url.pathname.match(/\w+\/status\/(\d+)\b/);
-		if (match) {
-			return `url:${match[1]} (${
-				TWITTER_SITES.map((s) => 'site:' + s).join(' OR ')
-			})`;
-		}
-	}
-	return 'url:' + url.hostname + url.pathname + url.search;
-}
 
 interface AccessTokenResponse {
 	access_token: string;

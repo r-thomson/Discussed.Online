@@ -3,6 +3,7 @@ import { DiscussionItem } from '../components/DiscussionItem.tsx';
 import { UrlForm } from '../components/UrlForm.tsx';
 import { pluralize } from '../utils.ts';
 import * as discussionSites from '../discussions/sites.ts';
+import { matchUrl } from '../discussions/url_match.ts';
 
 const app = new Hono();
 
@@ -60,9 +61,11 @@ function renderHomepage(c: Context) {
 }
 
 async function renderDiscussions(url: URL, c: Context) {
+	const match = matchUrl(url);
+
 	const discussions = (await Promise.allSettled(
 		Object.values(discussionSites).map((discussionSite) =>
-			discussionSite.getDiscussionsForUrl(url)
+			discussionSite.getDiscussionsForUrl(match)
 		),
 	)).filter((result) => result.status === 'fulfilled')
 		.flatMap((result) => result.value)

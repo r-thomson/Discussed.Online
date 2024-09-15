@@ -4,8 +4,15 @@ import { cacheResult } from '../cache.ts';
 export default {
 	name: 'Hacker News',
 
-	async getDiscussionsForUrl(url: URL) {
-		const data = await searchStories(makeHackerNewsQuery(url), {
+	searchBuilderVisitor: {
+		visitTweet: ({ user, id }) => `/${user}/status/${id}/`,
+		visitYouTube: ({ v }) => `youtube.com v=${v}`,
+		default: ({ url }) => url.hostname + url.pathname + url.search,
+	},
+
+	async getDiscussionsForUrl(match) {
+		const query = match.visit(this.searchBuilderVisitor);
+		const data = await searchStories(query, {
 			restrictSearchableAttributes: 'url',
 			ordering: 'popularity',
 		});
@@ -19,30 +26,6 @@ export default {
 		}));
 	},
 } satisfies DiscussionSite;
-
-function makeHackerNewsQuery(url: URL): string {
-	if (
-		[
-			'youtube.com',
-			'www.youtube.com',
-			'm.youtube.com',
-		].includes(url.hostname) && url.searchParams.get('v')
-	) {
-		const v = url.searchParams.get('v');
-		return `youtube.com ${v}`;
-	}
-	if (url.hostname === 'youtu.be') {
-		const v = url.pathname;
-		return `youtube.com ${v}`;
-	}
-	if (['twitter.com', 'x.com'].includes(url.hostname)) {
-		const match = url.pathname.match(/\/(\w+)\/status\/(\d+)\b/);
-		if (match) {
-			return `/${match[1]}/status/${match[2]}/`;
-		}
-	}
-	return url.hostname + url.pathname + url.search;
-}
 
 async function searchStories(
 	query: string,
