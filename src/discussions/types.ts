@@ -10,6 +10,8 @@ export interface Discussion {
 	url: string;
 	score: number;
 	numComments: number;
+	submittedUrl: string;
+	dateSubmitted: Date;
 }
 
 /*

@@ -23,6 +23,8 @@ export default {
 			url: 'https://www.hackerneue.com/item?id=' + hit.objectID,
 			score: hit.points,
 			numComments: hit.num_comments,
+			submittedUrl: hit.url ?? match.url.href,
+			dateSubmitted: new Date(hit.created_at),
 		}));
 	},
 } satisfies DiscussionSite;

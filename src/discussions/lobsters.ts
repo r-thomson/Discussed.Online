@@ -21,6 +21,8 @@ export default {
 			url: story.comments_url,
 			score: story.score,
 			numComments: story.comment_count,
+			submittedUrl: story.url,
+			dateSubmitted: new Date(story.created_at),
 		}));
 	},
 } satisfies DiscussionSite;

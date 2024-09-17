@@ -23,6 +23,8 @@ export default {
 			url: 'https://www.reddit.com' + child.data.permalink,
 			score: child.data.score,
 			numComments: child.data.num_comments,
+			submittedUrl: child.data.url,
+			dateSubmitted: new Date(child.data.created_utc * 1000),
 		}));
 	},
 } satisfies DiscussionSite;
