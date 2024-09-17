@@ -15,6 +15,7 @@
       "jsr:@std/testing@1.0.1": "jsr:@std/testing@1.0.1",
       "npm:@types/node": "npm:@types/node@18.16.19",
       "npm:autoprefixer@10.4.20": "npm:autoprefixer@10.4.20_postcss@8.4.41",
+      "npm:date-fns@4.0.0": "npm:date-fns@4.0.0",
       "npm:redis@4.7.0": "npm:redis@4.7.0_@redis+client@1.6.0",
       "npm:tailwindcss@3.4.10": "npm:tailwindcss@3.4.10_postcss@8.4.41"
     },
@@ -287,6 +288,10 @@
       },
       "cssesc@3.0.0": {
         "integrity": "sha512-/Tb/JcjK111nNScGob5MNtsntNM1aCNUDipB/TkwZFhyDrrE47SOx/18wF2bbjgc3ZzCSKW1T5nt5EbFoAz/Vg==",
+        "dependencies": {}
+      },
+      "date-fns@4.0.0": {
+        "integrity": "sha512-6K33+I8fQ5otvHgLIvKK1xmMbLAh0pduyrx7dwMXKiGYeoWhmk6M3Zoak9n7bXHMJQlHq1yqmdGy1QxKddJjUA==",
         "dependencies": {}
       },
       "didyoumean@1.2.2": {
@@ -921,6 +926,7 @@
       "jsr:@std/path@1.0.3",
       "jsr:@std/testing@1.0.1",
       "npm:autoprefixer@10.4.20",
+      "npm:date-fns@4.0.0",
       "npm:redis@4.7.0",
       "npm:tailwindcss@3.4.10"
     ]

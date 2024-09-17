@@ -1,3 +1,4 @@
+import { Timestamp } from './Timestamp.tsx';
 import type { Discussion } from '../discussions/types.ts';
 import { pluralize } from '../utils.ts';
 
@@ -33,6 +34,7 @@ export const DiscussionItem = ({ discussion }: DiscussionItemProps) => {
 				<span class={`inline-block px-1 ${siteColor}`}>
 					{discussion.siteName}
 				</span>{' '}
+				<Timestamp date={discussion.dateSubmitted} />{' '}
 				({discussion.score.toLocaleString('en-US')}{' '}
 				{pluralize(discussion.score, 'point', 'points')})
 			</p>
