@@ -1,5 +1,6 @@
 import type { DiscussionSite } from './types.ts';
 import { cacheResult } from '../cache.ts';
+import { pick } from '../utils.ts';
 
 export default {
 	name: 'Hacker News',
@@ -39,30 +40,22 @@ async function searchStories(
 	url.searchParams.set('query', query);
 	url.searchParams.set('tags', 'story');
 
-	if (options.numericFilters) {
-		url.searchParams.set('numericFilters', options.numericFilters);
-	}
-	if (options.page !== undefined) {
-		url.searchParams.set('page', options.page.toString());
-	}
-	if (options.hitsPerPage !== undefined) {
-		url.searchParams.set('hitsPerPage', options.hitsPerPage.toString());
-	}
-	if (options.restrictSearchableAttributes !== undefined) {
-		url.searchParams.set(
+	Object.entries(
+		pick(
+			options,
+			'numericFilters',
+			'page',
+			'hitsPerPage',
 			'restrictSearchableAttributes',
-			options.restrictSearchableAttributes,
-		);
-	}
-	if (options.typoTolerance !== undefined) {
-		url.searchParams.set('typoTolerance', options.typoTolerance.toString());
-	}
-	if (options.ignorePlurals !== undefined) {
-		url.searchParams.set('ignorePlurals', options.ignorePlurals.toString());
-	}
-	if (options.queryType !== undefined) {
-		url.searchParams.set('queryType', options.queryType);
-	}
+			'typoTolerance',
+			'ignorePlurals',
+			'queryType',
+		),
+	).forEach(([key, value]) => {
+		if (value !== undefined) {
+			url.searchParams.set(key, value.toString());
+		}
+	});
 
 	return await cacheResult('cache:' + url.href, 10 * 60, async () => {
 		const response = await fetch(url, {
