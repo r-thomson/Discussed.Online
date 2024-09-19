@@ -63,11 +63,20 @@ function renderHomepage(c: Context) {
 async function renderDiscussions(url: URL, c: Context) {
 	const match = matchUrl(url);
 
-	const discussions = (await Promise.allSettled(
+	const results = await Promise.allSettled(
 		Object.values(discussionSites).map((discussionSite) =>
 			discussionSite.getDiscussionsForUrl(match)
 		),
-	)).filter((result) => result.status === 'fulfilled')
+	);
+
+	results.forEach((result) => {
+		if (result.status === 'rejected') {
+			console.error(result.reason);
+		}
+	});
+
+	const discussions = results
+		.filter((result) => result.status === 'fulfilled')
 		.flatMap((result) => result.value)
 		.sort((a, b) => b.numComments - a.numComments);
 
