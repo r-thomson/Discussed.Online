@@ -6,7 +6,7 @@ export default {
 
 	searchBuilderVisitor: {
 		visitTweet: ({ user, id }) => `/${user}/status/${id}/`,
-		visitYouTube: ({ v }) => `youtube.com v=${v}`,
+		visitYouTube: ({ v }) => `youtube.com v=${v.replace(/^-/, '')}`,
 		default: ({ url }) => url.hostname + url.pathname + url.search,
 	},
 
@@ -38,21 +38,30 @@ async function searchStories(
 
 	url.searchParams.set('query', query);
 	url.searchParams.set('tags', 'story');
-	url.searchParams.set('typoTolerance', 'false');
+
 	if (options.numericFilters) {
 		url.searchParams.set('numericFilters', options.numericFilters);
 	}
-	if (options.page) {
+	if (options.page !== undefined) {
 		url.searchParams.set('page', options.page.toString());
 	}
-	if (options.hitsPerPage) {
+	if (options.hitsPerPage !== undefined) {
 		url.searchParams.set('hitsPerPage', options.hitsPerPage.toString());
 	}
-	if (options.restrictSearchableAttributes) {
+	if (options.restrictSearchableAttributes !== undefined) {
 		url.searchParams.set(
 			'restrictSearchableAttributes',
 			options.restrictSearchableAttributes,
 		);
+	}
+	if (options.typoTolerance !== undefined) {
+		url.searchParams.set('typoTolerance', options.typoTolerance.toString());
+	}
+	if (options.ignorePlurals !== undefined) {
+		url.searchParams.set('ignorePlurals', options.ignorePlurals.toString());
+	}
+	if (options.queryType !== undefined) {
+		url.searchParams.set('queryType', options.queryType);
 	}
 
 	return await cacheResult('cache:' + url.href, 10 * 60, async () => {
@@ -73,6 +82,9 @@ interface SearchOptions {
 	page?: number;
 	hitsPerPage?: number;
 	restrictSearchableAttributes?: string;
+	typoTolerance?: boolean;
+	ignorePlurals?: boolean;
+	queryType?: 'prefixLast' | 'prefixNone';
 }
 
 interface Results {
