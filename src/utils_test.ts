@@ -1,6 +1,12 @@
-import { assert, assertEquals, assertFalse, assertRejects } from '@std/assert/';
+import {
+	assert,
+	assertEquals,
+	assertFalse,
+	assertRejects,
+	assertStrictEquals,
+} from '@std/assert/';
 import '@std/testing/time/';
-import { AsyncLock, basicAuth, pluralize } from './utils.ts';
+import { AsyncLock, basicAuth, pick, pluralize } from './utils.ts';
 
 function sleep(ms: number): Promise<void> {
 	return new Promise((res) => {
@@ -141,6 +147,63 @@ Deno.test('basicAuth()', () => {
 		basicAuth('aladdin', 'opensesame'),
 		'Basic YWxhZGRpbjpvcGVuc2VzYW1l',
 	);
+});
+
+Deno.test('pick() returns object with only provided keys', () => {
+	const object = {
+		foo: 'Hello',
+		bar: 42,
+		baz: [],
+		qux: undefined,
+	};
+	const picked = pick(object, 'bar', 'qux');
+
+	assertStrictEquals(Object.getPrototypeOf(picked), Object.prototype);
+	assertEquals(picked, {
+		bar: 42,
+		qux: undefined,
+	});
+
+	// @ts-expect-error: assertion
+	picked.foo;
+	picked.bar;
+	// @ts-expect-error: assertion
+	picked.baz;
+	picked.qux;
+});
+
+Deno.test('pick() with no keys returns empty object', () => {
+	const object = {
+		foo: 'Hello',
+		bar: 42,
+		baz: [],
+		qux: undefined,
+	};
+	const picked = pick(object);
+
+	assertEquals(picked, {});
+
+	// @ts-expect-error: assertion
+	picked.foo;
+	// @ts-expect-error: assertion
+	picked.bar;
+	// @ts-expect-error: assertion
+	picked.baz;
+	// @ts-expect-error: assertion
+	picked.qux;
+});
+
+Deno.test('pick() ignores keys not in object', () => {
+	// @ts-expect-error: intentional misuse
+	const picked = pick({}, 'blam');
+
+	assertFalse('blam' in picked);
+});
+
+Deno.test('pick() preserves null prototype', () => {
+	const picked = pick(Object.create(null));
+
+	assertEquals(Object.getPrototypeOf(picked), null);
 });
 
 Deno.test('pluralize()', () => {

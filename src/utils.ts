@@ -55,6 +55,24 @@ export function basicAuth(userId: string, password: string): string {
 	return 'Basic ' + encodeBase64(userId + ':' + password);
 }
 
+/** Return a new object with the chosen keys of the provided object. */
+export function pick<T extends object, K extends keyof T = never>(
+	object: T,
+	...keys: readonly K[]
+): Pick<T, K> {
+	const newObj = (
+		Object.getPrototypeOf(object) === null ? Object.create(null) : {}
+	) as Pick<T, K>;
+
+	keys.forEach((k) => {
+		if (k in object) {
+			newObj[k] = object[k];
+		}
+	});
+
+	return newObj;
+}
+
 export function pluralize(
 	quantity: number,
 	singular: string,
