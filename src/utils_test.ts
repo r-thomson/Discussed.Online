@@ -5,14 +5,9 @@ import {
 	assertRejects,
 	assertStrictEquals,
 } from '@std/assert/';
+import { delay } from '@std/async';
 import '@std/testing/time/';
 import { AsyncLock, basicAuth, pick, pluralize } from './utils.ts';
-
-function sleep(ms: number): Promise<void> {
-	return new Promise((res) => {
-		setTimeout(res, ms);
-	});
-}
 
 Deno.test('AsyncLock.acquire() resolves when callback resolves', async () => {
 	const lock = new AsyncLock();
@@ -51,7 +46,7 @@ Deno.test('AsyncLock.acquire() waits for first callback to complete', async () =
 		called = true;
 		return Promise.resolve();
 	});
-	await sleep(0);
+	await delay(0);
 
 	assertFalse(called);
 	resolve();
@@ -65,12 +60,12 @@ Deno.test('AsyncLock.acquire() waits for previously scheduled callbacks to compl
 	let called = false;
 
 	lock.acquire(() => promise);
-	await sleep(0);
+	await delay(0);
 	const completion = lock.acquire(() => {
 		called = true;
 		return Promise.resolve();
 	});
-	await sleep(0);
+	await delay(0);
 
 	assertFalse(called);
 	resolve();
@@ -102,7 +97,7 @@ Deno.test('AsyncLock.acquire() executes callbacks in order', async () => {
 
 	for (let i = 0; i < 100; i++) {
 		lock.acquire(async () => {
-			await sleep(Math.random() * 10);
+			await delay(Math.random() * 10);
 			results.push(i);
 			return i;
 		}).then((value) => {
