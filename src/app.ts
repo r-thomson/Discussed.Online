@@ -6,7 +6,7 @@ import { trimTrailingSlash } from 'hono/trailing-slash';
 import { serveAssets } from './assets.ts';
 import Document from './components/Document.tsx';
 import healthz from './routes/healthz.ts';
-import index from './routes/index.tsx';
+import index from './routes/index.ts';
 
 const app = new Hono({
 	router: new TrieRouter(),
