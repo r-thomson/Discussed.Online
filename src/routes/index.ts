@@ -7,14 +7,15 @@ import { ResultsPage } from '../components/ResultsPage.tsx';
 const app = new Hono();
 
 app.get('/', (c) => {
-	let url;
-	try {
-		url = new URL(c.req.query('url') ?? '');
-	} catch {
-		return c.render(HomePage());
-	}
+	const urlParam = c.req.query('url');
 
-	return renderDiscussions(url, c);
+	if (urlParam === undefined) {
+		return c.render(HomePage());
+	} else if (!URL.canParse(urlParam)) {
+		return c.redirect('/');
+	} else {
+		return renderDiscussions(new URL(urlParam), c);
+	}
 });
 
 app.get(
