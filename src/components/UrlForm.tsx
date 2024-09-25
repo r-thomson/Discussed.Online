@@ -1,12 +1,12 @@
 import { html } from 'hono/html';
-import { memo } from 'hono/jsx';
+import { type JSX, memo } from 'hono/jsx';
 import { ArrowRightIcon } from './icons.tsx';
 
 interface InputProps {
 	value?: string;
 }
 
-const Input = (props: InputProps) => (
+const Input = (props: InputProps & JSX.IntrinsicElements['input']) => (
 	<>
 		<input
 			type='url'
