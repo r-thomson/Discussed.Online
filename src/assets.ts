@@ -67,8 +67,7 @@ async function makeAssetsMiddleware(
 	return {
 		serveAssets: serveStatic({
 			...options.serveStaticOptions,
-			// Does not support absolute path for some reason
-			root: path.relative('.', distPath),
+			root: distPath,
 		}),
 		manifest,
 	};

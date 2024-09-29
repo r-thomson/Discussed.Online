@@ -9,7 +9,7 @@
 		"@std/testing": "jsr:@std/testing@1.0.1",
 		"autoprefixer": "npm:autoprefixer@10.4.20",
 		"date-fns": "npm:date-fns@4.0.0",
-		"hono": "jsr:@hono/hono@4.5.9",
+		"hono": "jsr:@hono/hono@4.6.3",
 		"postcss/": "https://deno.land/x/postcss@8.4.16/",
 		"redis": "npm:redis@4.7.0",
 		"tailwindcss": "npm:tailwindcss@3.4.10"

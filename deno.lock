@@ -2,7 +2,7 @@
   "version": "3",
   "packages": {
     "specifiers": {
-      "jsr:@hono/hono@4.5.9": "jsr:@hono/hono@4.5.9",
+      "jsr:@hono/hono@4.6.3": "jsr:@hono/hono@4.6.3",
       "jsr:@std/assert@1.0.3": "jsr:@std/assert@1.0.3",
       "jsr:@std/async@1.0.4": "jsr:@std/async@1.0.4",
       "jsr:@std/async@^1.0.4": "jsr:@std/async@1.0.4",
@@ -20,8 +20,8 @@
       "npm:tailwindcss@3.4.10": "npm:tailwindcss@3.4.10_postcss@8.4.41"
     },
     "jsr": {
-      "@hono/hono@4.5.9": {
-        "integrity": "47f561e67aedbd6d1e21e3a1ae26c1b80ffdb62a51c161d502e75bee17ca40af"
+      "@hono/hono@4.6.3": {
+        "integrity": "a1f5a18cd12a0db54755b0461dd5a4e2d93a6f85403073eb710103eacc42daf3"
       },
       "@std/assert@1.0.3": {
         "integrity": "b0d03ce1ced880df67132eea140623010d415848df66f6aa5df76507ca7c26d8",
@@ -918,7 +918,7 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@hono/hono@4.5.9",
+      "jsr:@hono/hono@4.6.3",
       "jsr:@std/assert@1.0.3",
       "jsr:@std/async@1.0.4",
       "jsr:@std/encoding@1.0.3",
