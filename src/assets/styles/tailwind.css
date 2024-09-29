@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+	fieldset {
+		/* Reset default style */
+		min-inline-size: 0;
+	}
+}
