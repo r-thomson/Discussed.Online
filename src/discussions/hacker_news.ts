@@ -11,11 +11,11 @@ export default {
 		default: ({ url }) => url.hostname + url.pathname + url.search,
 	},
 
-	async getDiscussionsForUrl(match) {
+	async getDiscussionsForUrl(match, { ordering = 'popular' }) {
 		const query = match.visit(this.searchBuilderVisitor);
 		const data = await searchStories(query, {
 			restrictSearchableAttributes: 'url',
-			ordering: 'popularity',
+			ordering: ordering === 'recent' ? 'date' : 'popularity',
 		});
 
 		return data.hits.map((hit) => ({

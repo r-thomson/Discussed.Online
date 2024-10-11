@@ -12,9 +12,6 @@ export default {
 		const query = match.visit(this.searchBuilderVisitor);
 		const stories = await getStoriesByUrl(query);
 
-		// The API doesn't seem to support any built-in sorting
-		stories.sort((a, b) => b.comment_count - a.comment_count);
-
 		return stories.map((story) => ({
 			siteName: 'Lobsters',
 			title: story.title,

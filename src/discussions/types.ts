@@ -1,8 +1,12 @@
 export interface DiscussionSite {
 	name: string;
 	searchBuilderVisitor: SearchBuilderVisitor;
-	getDiscussionsForUrl(match: MatchedUrl): Promise<Discussion[]>;
+	getDiscussionsForUrl(match: MatchedUrl, options: {
+		ordering?: DiscussionsOrdering;
+	}): Promise<Discussion[]>;
 }
+
+export type DiscussionsOrdering = 'popular' | 'recent';
 
 export interface Discussion {
 	siteName: string;

@@ -12,10 +12,11 @@ export default {
 		default: ({ url }) => 'url:' + url.hostname + url.pathname + url.search,
 	},
 
-	async getDiscussionsForUrl(match) {
+	async getDiscussionsForUrl(match, { ordering = 'popular' }) {
 		const query = match.visit(this.searchBuilderVisitor);
 		const data = await searchLinks(query, {
-			sort: 'comments',
+			sort: ordering === 'recent' ? 'new' : 'comments',
+			t: 'all',
 		});
 
 		return data.data.children.map((child) => ({
