@@ -1,4 +1,5 @@
 import { encodeBase64 } from '@std/encoding/base64';
+import { JSX } from 'hono/jsx/jsx-runtime';
 
 /**
  * Synchronization tool for ensuring that only one piece of asynchronous
@@ -53,6 +54,12 @@ interface CallbackWithResolvers<T> {
 
 export function basicAuth(userId: string, password: string): string {
 	return 'Basic ' + encodeBase64(userId + ':' + password);
+}
+
+export function dataUrlFromSvg(element: JSX.Element): string {
+	return `url("data:image/svg+xml,${
+		encodeURIComponent(element.toString().replaceAll('"', "'"))
+	}")`;
 }
 
 /** Return a new object with the chosen keys of the provided object. */

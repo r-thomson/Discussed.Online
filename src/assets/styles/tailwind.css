@@ -8,3 +8,9 @@
 		min-inline-size: 0;
 	}
 }
+
+@layer components {
+	.text-label {
+		@apply text-sm font-medium text-gray-800;
+	}
+}
