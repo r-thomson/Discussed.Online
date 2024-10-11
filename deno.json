@@ -29,7 +29,7 @@
 		"singleQuote": true
 	},
 	"compilerOptions": {
-		"jsx": "react-jsx",
+		"jsx": "precompile",
 		"jsxImportSource": "hono/jsx"
 	}
 }

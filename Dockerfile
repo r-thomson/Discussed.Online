@@ -1,4 +1,4 @@
-FROM denoland/deno:1.45.5
+FROM denoland/deno:2.0.0
 
 ARG PORT=8000
 EXPOSE $PORT
@@ -18,4 +18,4 @@ ADD . .
 # Compile the main app so that it doesn't need to be compiled each startup/entry.
 RUN deno cache --reload main.ts
 
-CMD ["run",  "--cached-only", "--allow-env", "--allow-net", "--allow-read", "--allow-write", "--allow-sys", "main.ts"]
+CMD ["run", "--cached-only", "--allow-env", "--allow-net", "--allow-read", "--allow-write", "--allow-sys", "main.ts"]
