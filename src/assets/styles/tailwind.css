@@ -11,6 +11,6 @@
 
 @layer components {
 	.text-label {
-		@apply text-sm font-medium text-gray-800;
+		@apply text-sm font-medium text-gray-800 cursor-default select-none;
 	}
 }
