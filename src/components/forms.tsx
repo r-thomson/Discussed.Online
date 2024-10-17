@@ -9,7 +9,7 @@ export const Button = ({ children, ...attrs }: ButtonProps) => (
 	<button
 		{...attrs}
 		type={attrs.type ?? 'button'}
-		class='rounded border bg-white px-2.5 py-1 text-sm font-medium text-gray-800 shadow-sm active:bg-gray-100'
+		class='rounded border border-gray-300 bg-white px-2.5 py-1 text-sm font-medium text-gray-800 shadow-sm active:bg-gray-100'
 	>
 		{children}
 	</button>
@@ -22,7 +22,7 @@ type SelectProps = PropsWithChildren<JSX.IntrinsicElements['select']>;
 export const Select = ({ children, ...attrs }: SelectProps) => (
 	<select
 		{...attrs}
-		class='appearance-none rounded border bg-white bg-no-repeat py-1 pl-2.5 pr-6 text-sm text-gray-800 shadow-sm'
+		class='appearance-none rounded border border-gray-300 bg-white bg-no-repeat py-1 pl-2.5 pr-6 text-sm text-gray-800 shadow-sm'
 		style={{
 			backgroundImage: dataUrlFromSvg(selectArrows),
 			backgroundPosition: 'right .375rem center',
@@ -43,7 +43,7 @@ export const Radio = (attrs: JSX.IntrinsicElements['input']) => (
 	<input
 		{...attrs}
 		type='radio'
-		class='size-4 appearance-none rounded-full border bg-white bg-center bg-origin-border -outline-offset-2 checked:border-transparent checked:bg-blue-600'
+		class='size-4 appearance-none rounded-full border border-gray-300 bg-white bg-center bg-origin-border -outline-offset-2 checked:border-transparent checked:bg-blue-600'
 		style={{ backgroundImage: dataUrlFromSvg(radioCircle) }}
 	/>
 );
