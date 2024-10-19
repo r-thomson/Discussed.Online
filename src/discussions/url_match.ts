@@ -25,8 +25,8 @@ export function matchTweetUrl(url: URL): MatchedTweet | undefined {
 		if (match) {
 			return {
 				url,
-				id: match[1],
-				user: match[2],
+				user: match[1],
+				id: match[2],
 				visit(visitor) {
 					return visitor.visitTweet?.(this) ?? visitor.default(this);
 				},
