@@ -7,16 +7,9 @@ import type {
 
 /** Return a site-specific match for the given URL */
 export function matchUrl(url: URL): MatchedUrl {
-	const fallback = {
-		url,
-		visit(visitor: SearchBuilderVisitor) {
-			return visitor.default(this);
-		},
-	};
-
 	return matchTweetUrl(url) ??
 		matchYouTubeUrl(url) ??
-		fallback;
+		matchAnyUrl(url);
 }
 
 export function matchTweetUrl(url: URL): MatchedTweet | undefined {
@@ -55,4 +48,26 @@ export function matchYouTubeUrl(url: URL): MatchedYouTube | undefined {
 			},
 		};
 	}
+}
+
+const UTM_PARAMS = [
+	'utm_source',
+	'utm_medium',
+	'utm_campaign',
+	'utm_term',
+	'utm_content',
+];
+
+export function matchAnyUrl(url: URL): MatchedUrl {
+	url = new URL(url);
+	for (const param of UTM_PARAMS) {
+		url.searchParams.delete(param);
+	}
+
+	return {
+		url,
+		visit(visitor: SearchBuilderVisitor) {
+			return visitor.default(this);
+		},
+	};
 }
