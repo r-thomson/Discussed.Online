@@ -11,17 +11,29 @@ export default {
 		default: ({ url }) => url.hostname + url.pathname + url.search,
 	},
 
-	async getDiscussionsForUrl(match, { ordering = 'popular' }) {
+	async getDiscussionsForUrl(match, { ordering = 'popular', settings }) {
 		const query = match.visit(this.searchBuilderVisitor);
 		const data = await searchStories(query, {
 			restrictSearchableAttributes: 'url',
 			ordering: ordering === 'recent' ? 'date' : 'popularity',
 		});
 
+		let baseUrl: string;
+		switch (settings.hackerNews) {
+			case 'news.ycombinator.com':
+				baseUrl = 'https://news.ycombinator.com/item?id=';
+				break;
+			case 'hackerneue.com':
+				baseUrl = 'https://www.hackerneue.com/item?id=';
+				break;
+			default:
+				settings.hackerNews satisfies never;
+		}
+
 		return data.hits.map((hit) => ({
 			siteName: 'Hacker News',
 			title: hit.title,
-			url: 'https://www.hackerneue.com/item?id=' + hit.objectID,
+			url: baseUrl + hit.objectID,
 			score: hit.points,
 			numComments: hit.num_comments,
 			submittedUrl: hit.url ?? match.url.href,

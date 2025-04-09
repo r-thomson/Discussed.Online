@@ -1,8 +1,11 @@
+import { type RequestSettings } from '../middleware/settings.ts';
+
 export interface DiscussionSite {
 	name: string;
 	searchBuilderVisitor: SearchBuilderVisitor;
 	getDiscussionsForUrl(match: MatchedUrl, options: {
 		ordering?: DiscussionsOrdering;
+		settings: RequestSettings;
 	}): Promise<Discussion[]>;
 }
 

@@ -12,17 +12,29 @@ export default {
 		default: ({ url }) => 'url:' + url.hostname + url.pathname + url.search,
 	},
 
-	async getDiscussionsForUrl(match, { ordering = 'popular' }) {
+	async getDiscussionsForUrl(match, { ordering = 'popular', settings }) {
 		const query = match.visit(this.searchBuilderVisitor);
 		const data = await searchLinks(query, {
 			sort: ordering === 'recent' ? 'new' : 'comments',
 			t: 'all',
 		});
 
+		let baseUrl: string;
+		switch (settings.reddit) {
+			case 'reddit.com':
+				baseUrl = 'https://www.reddit.com';
+				break;
+			case 'old.reddit.com':
+				baseUrl = 'https://old.reddit.com';
+				break;
+			default:
+				settings.reddit satisfies never;
+		}
+
 		return data.data.children.map((child) => ({
 			siteName: child.data.subreddit_name_prefixed,
 			title: child.data.title,
-			url: 'https://www.reddit.com' + child.data.permalink,
+			url: baseUrl + child.data.permalink,
 			score: child.data.score,
 			numComments: child.data.num_comments,
 			submittedUrl: child.data.url,

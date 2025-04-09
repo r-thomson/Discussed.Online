@@ -32,10 +32,11 @@ app.get(
 async function renderDiscussions(url: URL, c: Context) {
 	const match = matchUrl(url);
 	const ordering = parseOrdering(c.req.query('ordering') ?? '') ?? 'popular';
+	const settings = c.get('settings');
 
 	const results = await Promise.allSettled(
 		Object.values(discussionSites).map((discussionSite) =>
-			discussionSite.getDiscussionsForUrl(match, { ordering })
+			discussionSite.getDiscussionsForUrl(match, { ordering, settings })
 		),
 	);
 
