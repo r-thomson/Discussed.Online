@@ -43,7 +43,7 @@ export const Radio = (attrs: JSX.IntrinsicElements['input']) => (
 	<input
 		{...attrs}
 		type='radio'
-		class='size-4 appearance-none rounded-full border border-gray-300 bg-white bg-center bg-origin-border -outline-offset-2 checked:border-transparent checked:bg-blue-600'
+		class='size-4 appearance-none rounded-full border border-gray-300 bg-white bg-center bg-origin-border shadow-sm -outline-offset-2 checked:border-transparent checked:bg-blue-600'
 		style={{ backgroundImage: dataUrlFromSvg(radioCircle) }}
 	/>
 );
