@@ -1,9 +1,8 @@
 import { type MiddlewareHandler } from 'hono';
-import { AcceptedPlugin } from 'postcss/lib/postcss.js';
+import postcss, { AcceptedPlugin } from 'postcss';
 import { ensureDir, expandGlob } from '@std/fs';
 import * as path from '@std/path';
 import autoprefixer from 'autoprefixer';
-import postcss from 'postcss/mod.js';
 import tailwindcss from 'tailwindcss';
 import { encodeHex } from '@std/encoding';
 import { serveStatic } from 'hono/deno';

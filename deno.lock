@@ -5,6 +5,7 @@
     "jsr:@std/assert@1.0.12": "1.0.12",
     "jsr:@std/assert@^1.0.12": "1.0.12",
     "jsr:@std/async@1.0.12": "1.0.12",
+    "jsr:@std/async@^1.0.12": "1.0.12",
     "jsr:@std/data-structures@^1.0.6": "1.0.6",
     "jsr:@std/encoding@1.0.9": "1.0.9",
     "jsr:@std/fs@1.0.16": "1.0.16",
@@ -18,6 +19,7 @@
     "npm:autoprefixer@10.4.21": "10.4.21_postcss@8.4.41",
     "npm:date-fns@4.0.0": "4.0.0",
     "npm:date-fns@4.1.0": "4.1.0",
+    "npm:postcss@8.5.3": "8.5.3",
     "npm:redis@4.7.0": "4.7.0_@redis+client@1.6.0",
     "npm:tailwindcss@3.4.10": "3.4.10_postcss@8.4.41"
   },
@@ -56,6 +58,7 @@
       "integrity": "12b3db12d34f0f385a26248933bde766c0f8c5ad8b6ab34d4d38f528ab852f48",
       "dependencies": [
         "jsr:@std/assert@^1.0.12",
+        "jsr:@std/async@^1.0.12",
         "jsr:@std/data-structures",
         "jsr:@std/fs@^1.0.16",
         "jsr:@std/internal",
@@ -199,7 +202,7 @@
         "fraction.js",
         "normalize-range",
         "picocolors@1.1.1",
-        "postcss",
+        "postcss@8.4.41",
         "postcss-value-parser"
       ]
     },
@@ -211,7 +214,7 @@
         "fraction.js",
         "normalize-range",
         "picocolors@1.1.1",
-        "postcss",
+        "postcss@8.4.41",
         "postcss-value-parser"
       ]
     },
@@ -463,6 +466,9 @@
         "thenify-all"
       ]
     },
+    "nanoid@3.3.11": {
+      "integrity": "sha512-N8SpfPUnUp1bK+PMYW8qSWdl9U+wwNWI4QKxOYDy9JAro3WMX7p2OeVRF9v+347pnakNevPmiHhNmZ2HbFA76w=="
+    },
     "nanoid@3.3.7": {
       "integrity": "sha512-eSRppjcPIatRIMC1U6UngP8XFcz8MQWGQdt1MTBQ7NaAmvXDfvNxbvWV3x2y6CdEUciCSsDHDQZbhYaB8QEo2g=="
     },
@@ -515,7 +521,7 @@
     "postcss-import@15.1.0_postcss@8.4.41": {
       "integrity": "sha512-hpr+J05B2FVYUAXHeK1YyI267J/dDDhMU6B6civm8hSY1jYJnBXxzKDKDswzJmtLHryrjhnDjqqp/49t8FALew==",
       "dependencies": [
-        "postcss",
+        "postcss@8.4.41",
         "postcss-value-parser",
         "read-cache",
         "resolve"
@@ -525,21 +531,21 @@
       "integrity": "sha512-dDLF8pEO191hJMtlHFPRa8xsizHaM82MLfNkUHdUtVEV3tgTp5oj+8qbEqYM57SLfc74KSbw//4SeJma2LRVIw==",
       "dependencies": [
         "camelcase-css",
-        "postcss"
+        "postcss@8.4.41"
       ]
     },
     "postcss-load-config@4.0.2_postcss@8.4.41": {
       "integrity": "sha512-bSVhyJGL00wMVoPUzAVAnbEoWyqRxkjv64tUl427SKnPrENtq6hJwUojroMz2VB+Q1edmi4IfrAPpami5VVgMQ==",
       "dependencies": [
         "lilconfig@3.1.2",
-        "postcss",
+        "postcss@8.4.41",
         "yaml"
       ]
     },
     "postcss-nested@6.2.0_postcss@8.4.41": {
       "integrity": "sha512-HQbt28KulC5AJzG+cZtj9kvKB93CFCdLvog1WFLf1D+xmMvPGlBstkpTEZfK5+AN9hfJocyBFCNiqyS48bpgzQ==",
       "dependencies": [
-        "postcss",
+        "postcss@8.4.41",
         "postcss-selector-parser"
       ]
     },
@@ -556,9 +562,17 @@
     "postcss@8.4.41": {
       "integrity": "sha512-TesUflQ0WKZqAvg52PWL6kHgLKP6xB6heTOdoYM0Wt2UHyxNa4K25EZZMgKns3BH1RLVbZCREPpLY0rhnNoHVQ==",
       "dependencies": [
-        "nanoid",
+        "nanoid@3.3.7",
         "picocolors@1.0.1",
-        "source-map-js"
+        "source-map-js@1.2.0"
+      ]
+    },
+    "postcss@8.5.3": {
+      "integrity": "sha512-dle9A3yYxlBSrt8Fu+IpjGT8SY8hN0mlaA6GY8t0P5PjIOZemULz/E2Bnm/2dcUOena75OTNkHI76uZBNUUq3A==",
+      "dependencies": [
+        "nanoid@3.3.11",
+        "picocolors@1.1.1",
+        "source-map-js@1.2.1"
       ]
     },
     "queue-microtask@1.2.3": {
@@ -618,6 +632,9 @@
     },
     "source-map-js@1.2.0": {
       "integrity": "sha512-itJW8lvSA0TXEphiRoawsCksnlf8SyvmFzIhltqAHluXd88pkCd+cXJVHTDwdCr0IzwptSm035IHQktUu1QUMg=="
+    },
+    "source-map-js@1.2.1": {
+      "integrity": "sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA=="
     },
     "string-width@4.2.3": {
       "integrity": "sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==",
@@ -679,7 +696,7 @@
         "normalize-path",
         "object-hash",
         "picocolors@1.0.1",
-        "postcss",
+        "postcss@8.4.41",
         "postcss-import",
         "postcss-js",
         "postcss-load-config",
