@@ -8,6 +8,7 @@ import Document from './components/Document.tsx';
 import { settingsMiddleware } from './middleware/settings.ts';
 import healthz from './routes/healthz.ts';
 import index from './routes/index.ts';
+import settings from './routes/settings.ts';
 
 const app = new Hono({
 	router: new TrieRouter(),
@@ -19,6 +20,7 @@ app.use(jsxRenderer(Document));
 app.use(settingsMiddleware);
 
 app.route('/', index);
+app.route('/settings', settings);
 app.get('/styles/*', serveAssets);
 app.route('/healthz', healthz);
 
