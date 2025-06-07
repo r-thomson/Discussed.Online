@@ -6,6 +6,7 @@ export default {
 	name: 'Reddit',
 
 	searchBuilderVisitor: {
+		visitTtvClip: ({ id }) => `url:${id} site:twitch.tv`,
 		visitTweet: ({ id }) => `url:${id} (site:twitter.com OR site:x.com)`,
 		visitYouTube: ({ v }) =>
 			`url:"${v}" (site:youtube.com OR site:youtu.be)`,

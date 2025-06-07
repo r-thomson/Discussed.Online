@@ -1,4 +1,5 @@
 import type {
+	MatchedTtvClip,
 	MatchedTweet,
 	MatchedUrl,
 	MatchedYouTube,
@@ -7,9 +8,38 @@ import type {
 
 /** Return a site-specific match for the given URL */
 export function matchUrl(url: URL): MatchedUrl {
-	return matchTweetUrl(url) ??
+	return matchTtvClipUrl(url) ??
+		matchTweetUrl(url) ??
 		matchYouTubeUrl(url) ??
 		matchAnyUrl(url);
+}
+
+export function matchTtvClipUrl(url: URL): MatchedTtvClip | undefined {
+	if (/(^|\.)clips\.twitch\.tv$/.test(url.hostname)) {
+		const match = url.pathname.match(/^\/(\w+)(?:-[\w-]+)?/);
+		if (match) {
+			return {
+				url,
+				id: match[1],
+				visit(visitor) {
+					return visitor.visitTtvClip?.(this) ??
+						visitor.default(this);
+				},
+			};
+		}
+	} else if (/(^|\.)twitch\.tv$/.test(url.hostname)) {
+		const match = url.pathname.match(/^\/\w+\/clip\/(\w+)(?:-[\w-]+)?/);
+		if (match) {
+			return {
+				url,
+				id: match[1],
+				visit(visitor) {
+					return visitor.visitTtvClip?.(this) ??
+						visitor.default(this);
+				},
+			};
+		}
+	}
 }
 
 export function matchTweetUrl(url: URL): MatchedTweet | undefined {
