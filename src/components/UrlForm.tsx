@@ -18,13 +18,13 @@ const Input = (props: InputProps & JSX.IntrinsicElements['input']) => (
 			{...props}
 		/>
 		{html`
-		<script>
+			<script>
 			document.currentScript.previousElementSibling.addEventListener('change', (event) => {
 				if (event.target.validity.typeMismatch) {
 					event.target.value = 'https://' + event.target.value;
 				}
 			});
-		</script>
+			</script>
 		`}
 	</>
 );

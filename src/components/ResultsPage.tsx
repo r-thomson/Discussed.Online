@@ -41,11 +41,11 @@ const ResultsForm = ({ url, ordering }: ResultsFormProps) => (
 		</noscript>
 
 		{html`
-		<script>
+			<script>
 			document.currentScript.parentElement.addEventListener('change', (event) => {
 				event.currentTarget.requestSubmit();
 			});
-		</script>
+			</script>
 		`}
 	</form>
 );
