@@ -1,6 +1,7 @@
 import { html } from 'hono/html';
+import { type JSX } from 'hono/jsx';
 
-export const AngleUpDownIcon = (props: object) => (
+export const AngleUpDownIcon = (props: JSX.HTMLAttributes) => (
 	<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 384 512' {...props}>
 		{html`
 			<!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
@@ -10,7 +11,7 @@ export const AngleUpDownIcon = (props: object) => (
 	</svg>
 );
 
-export const ArrowRightIcon = (props: object) => (
+export const ArrowRightIcon = (props: JSX.HTMLAttributes) => (
 	<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 448 512' {...props}>
 		{html`
 			<!--!Font Awesome Free 6.5.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2024 Fonticons, Inc.-->
