@@ -10,7 +10,8 @@ export default {
 		visitTweet: ({ id }) => `url:${id} (site:twitter.com OR site:x.com)`,
 		visitYouTube: ({ v }) =>
 			`url:"${v}" (site:youtube.com OR site:youtu.be)`,
-		default: ({ url }) => 'url:' + url.hostname + url.pathname + url.search,
+		default: ({ url }) =>
+			`url:${url.hostname}${url.pathname}${url.search} site:${url.hostname}`,
 	},
 
 	async getDiscussionsForUrl(match, { ordering = 'popular', settings }) {
