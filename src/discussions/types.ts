@@ -1,5 +1,6 @@
 import { type RequestSettings } from '../middleware/settings.ts';
 
+/** A Forum is a website that hosts discussion threads. */
 export interface Forum {
 	name: string;
 	searchBuilderVisitor: SearchBuilderVisitor;
@@ -9,8 +10,7 @@ export interface Forum {
 	}): Promise<Thread[]>;
 }
 
-export type ThreadsOrdering = 'popular' | 'recent';
-
+/** A Thread is an individual posting of a given URL to a Forum. */
 export interface Thread {
 	siteName: string;
 	title: string;
@@ -20,6 +20,8 @@ export interface Thread {
 	submittedUrl: string;
 	dateSubmitted: Date;
 }
+
+export type ThreadsOrdering = 'popular' | 'recent';
 
 /*
 The system here is a bit complex and could definitely use some simplification,
