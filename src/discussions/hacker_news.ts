@@ -1,9 +1,13 @@
 import type { Forum } from './types.ts';
 import { cacheResult } from '../cache.ts';
+import { HackerNewsIcon } from '../components/icons.tsx';
+import tailwindTheme from '../tailwind_theme.ts';
 import { pick } from '../utils.ts';
 
-export default {
+export const HackerNews: Forum = {
 	name: 'Hacker News',
+	iconSvg: HackerNewsIcon,
+	cssColor: tailwindTheme.colors.orange[400],
 
 	searchBuilderVisitor: {
 		visitTweet: ({ user, id }) => `/${user}/status/${id}/`,
@@ -31,7 +35,7 @@ export default {
 		}
 
 		return data.hits.map((hit) => ({
-			siteName: 'Hacker News',
+			forum: HackerNews,
 			title: hit.title,
 			url: baseUrl + hit.objectID,
 			score: hit.points,
@@ -40,7 +44,7 @@ export default {
 			dateSubmitted: new Date(hit.created_at),
 		}));
 	},
-} satisfies Forum;
+};
 
 async function searchStories(
 	query: string,

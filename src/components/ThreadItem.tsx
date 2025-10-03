@@ -7,14 +7,7 @@ interface ThreadItemProps {
 }
 
 export const ThreadItem = ({ thread }: ThreadItemProps) => {
-	// TODO: move styling information to the Forum object
-	const forumColor = thread.siteName === 'Hacker News'
-		? 'bg-orange-400 text-white'
-		: thread.siteName === 'Lobsters'
-		? 'bg-red-800 text-white'
-		: thread.siteName.startsWith('r/')
-		? 'bg-orange-600 text-white'
-		: '';
+	const IconSVG = thread.forum.iconSvg;
 
 	return (
 		<div class='space-y-0.5'>
@@ -31,8 +24,13 @@ export const ThreadItem = ({ thread }: ThreadItemProps) => {
 					{thread.numComments} comments
 				</a>
 				{' on '}
-				<span class={`inline-block px-1 ${forumColor}`}>
-					{thread.siteName}
+				<span
+					// TODO: Support changing text color based on forum
+					class='inline-flex items-center px-1 align-[-0.125rem] text-white'
+					style={{ backgroundColor: thread.forum.cssColor }}
+				>
+					<IconSVG class='h-3 mr-1 fill-current' />
+					{thread.boardName ?? thread.forum.name}
 				</span>{' '}
 				<Timestamp date={thread.dateSubmitted} />{' '}
 				({thread.score.toLocaleString('en-US')}{' '}

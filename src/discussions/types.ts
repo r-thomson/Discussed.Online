@@ -1,8 +1,12 @@
+import { type DOMAttributes } from 'hono/jsx';
+import { type JSX } from 'hono/jsx/jsx-runtime';
 import { type RequestSettings } from '../middleware/settings.ts';
 
 /** A Forum is a website that hosts discussion threads. */
 export interface Forum {
 	name: string;
+	cssColor: string;
+	iconSvg: (props: DOMAttributes) => JSX.Element;
 	searchBuilderVisitor: SearchBuilderVisitor;
 	findThreadsForUrl(match: MatchedUrl, options: {
 		ordering?: ThreadsOrdering;
@@ -12,7 +16,8 @@ export interface Forum {
 
 /** A Thread is an individual posting of a given URL to a Forum. */
 export interface Thread {
-	siteName: string;
+	forum: Forum;
+	boardName?: string;
 	title: string;
 	url: string;
 	score: number;

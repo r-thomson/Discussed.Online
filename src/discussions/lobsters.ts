@@ -1,8 +1,12 @@
 import type { Forum } from './types.ts';
 import { cacheResult } from '../cache.ts';
+import { LobstersIcon } from '../components/icons.tsx';
+import tailwindTheme from '../tailwind_theme.ts';
 
-export default {
+export const Lobsters: Forum = {
 	name: 'Lobsters',
+	iconSvg: LobstersIcon,
+	cssColor: tailwindTheme.colors.red[800],
 
 	searchBuilderVisitor: {
 		default: ({ url }) => url.href,
@@ -13,7 +17,7 @@ export default {
 		const stories = await getStoriesByUrl(query);
 
 		return stories.map((story) => ({
-			siteName: 'Lobsters',
+			forum: Lobsters,
 			title: story.title,
 			url: story.comments_url,
 			score: story.score,
@@ -22,7 +26,7 @@ export default {
 			dateSubmitted: new Date(story.created_at),
 		}));
 	},
-} satisfies Forum;
+};
 
 async function getStoriesByUrl(searchUrl: string): Promise<Story[]> {
 	const url = new URL('https://lobste.rs/stories/url/all');

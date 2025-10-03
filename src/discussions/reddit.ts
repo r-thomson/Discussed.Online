@@ -1,9 +1,13 @@
 import type { Forum } from './types.ts';
 import { cacheResult } from '../cache.ts';
+import { RedditIcon } from '../components/icons.tsx';
+import tailwindTheme from '../tailwind_theme.ts';
 import { AsyncLock, basicAuth } from '../utils.ts';
 
-export default {
+export const Reddit: Forum = {
 	name: 'Reddit',
+	iconSvg: RedditIcon,
+	cssColor: tailwindTheme.colors.orange[600],
 
 	searchBuilderVisitor: {
 		visitTtvClip: ({ id }) => `url:${id} site:twitch.tv`,
@@ -34,7 +38,8 @@ export default {
 		}
 
 		return data.data.children.map((child) => ({
-			siteName: child.data.subreddit_name_prefixed,
+			forum: Reddit,
+			boardName: child.data.subreddit_name_prefixed,
 			title: child.data.title,
 			url: baseUrl + child.data.permalink,
 			score: child.data.score,
@@ -43,7 +48,7 @@ export default {
 			dateSubmitted: new Date(child.data.created_utc * 1000),
 		}));
 	},
-} satisfies Forum;
+};
 
 interface AccessTokenResponse {
 	access_token: string;
