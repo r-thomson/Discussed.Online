@@ -1,6 +1,6 @@
 import { type Context, Hono } from 'hono';
-import * as discussionSites from '../discussions/sites.ts';
-import type { Discussion, DiscussionsOrdering } from '../discussions/types.ts';
+import * as forums from '../discussions/forums.ts';
+import type { Thread, ThreadsOrdering } from '../discussions/types.ts';
 import { matchUrl } from '../discussions/url_match.ts';
 import { HomePage } from '../components/HomePage.tsx';
 import { ResultsPage } from '../components/ResultsPage.tsx';
@@ -15,7 +15,7 @@ app.get('/', (c) => {
 	} else if (!URL.canParse(urlParam)) {
 		return c.redirect('/');
 	} else {
-		return renderDiscussions(new URL(urlParam), c);
+		return renderThreads(new URL(urlParam), c);
 	}
 });
 
@@ -29,14 +29,14 @@ app.get(
 	},
 );
 
-async function renderDiscussions(url: URL, c: Context) {
+async function renderThreads(url: URL, c: Context) {
 	const match = matchUrl(url);
 	const ordering = parseOrdering(c.req.query('ordering') ?? '') ?? 'popular';
 	const settings = c.get('settings');
 
 	const results = await Promise.allSettled(
-		Object.values(discussionSites).map((discussionSite) =>
-			discussionSite.getDiscussionsForUrl(match, { ordering, settings })
+		Object.values(forums).map((forum) =>
+			forum.findThreadsForUrl(match, { ordering, settings })
 		),
 	);
 
@@ -46,26 +46,26 @@ async function renderDiscussions(url: URL, c: Context) {
 		}
 	});
 
-	let discussions = results
+	let threads = results
 		.filter((result) => result.status === 'fulfilled')
 		.flatMap((result) => result.value);
-	discussions = sortDiscussions(discussions, ordering);
+	threads = sortThreads(threads, ordering);
 
-	return c.render(ResultsPage({ discussions, url, ordering }));
+	return c.render(ResultsPage({ threads, url, ordering }));
 }
 
-function parseOrdering(value: string): DiscussionsOrdering | undefined {
+function parseOrdering(value: string): ThreadsOrdering | undefined {
 	value = value.toLowerCase();
 	if (value === 'popular') return 'popular';
 	if (value === 'recent') return 'recent';
 	return undefined;
 }
 
-export function sortDiscussions(
-	discussions: Discussion[],
-	ordering: DiscussionsOrdering,
+export function sortThreads(
+	threads: Thread[],
+	ordering: ThreadsOrdering,
 ) {
-	return discussions.toSorted((a, b) => {
+	return threads.toSorted((a, b) => {
 		switch (ordering) {
 			case 'popular':
 				return b.numComments - a.numComments;

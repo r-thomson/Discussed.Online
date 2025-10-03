@@ -1,17 +1,17 @@
 import { type RequestSettings } from '../middleware/settings.ts';
 
-export interface DiscussionSite {
+export interface Forum {
 	name: string;
 	searchBuilderVisitor: SearchBuilderVisitor;
-	getDiscussionsForUrl(match: MatchedUrl, options: {
-		ordering?: DiscussionsOrdering;
+	findThreadsForUrl(match: MatchedUrl, options: {
+		ordering?: ThreadsOrdering;
 		settings: RequestSettings;
-	}): Promise<Discussion[]>;
+	}): Promise<Thread[]>;
 }
 
-export type DiscussionsOrdering = 'popular' | 'recent';
+export type ThreadsOrdering = 'popular' | 'recent';
 
-export interface Discussion {
+export interface Thread {
 	siteName: string;
 	title: string;
 	url: string;

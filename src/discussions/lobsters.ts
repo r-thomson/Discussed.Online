@@ -1,4 +1,4 @@
-import type { DiscussionSite } from './types.ts';
+import type { Forum } from './types.ts';
 import { cacheResult } from '../cache.ts';
 
 export default {
@@ -8,7 +8,7 @@ export default {
 		default: ({ url }) => url.href,
 	},
 
-	async getDiscussionsForUrl(match) {
+	async findThreadsForUrl(match) {
 		const query = match.visit(this.searchBuilderVisitor);
 		const stories = await getStoriesByUrl(query);
 
@@ -22,7 +22,7 @@ export default {
 			dateSubmitted: new Date(story.created_at),
 		}));
 	},
-} satisfies DiscussionSite;
+} satisfies Forum;
 
 async function getStoriesByUrl(searchUrl: string): Promise<Story[]> {
 	const url = new URL('https://lobste.rs/stories/url/all');

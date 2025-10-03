@@ -1,12 +1,12 @@
 import { html } from 'hono/html';
-import { DiscussionItem } from './DiscussionItem.tsx';
+import { ThreadItem } from './ThreadItem.tsx';
 import { Button, Select } from './forms.tsx';
 import { PageHeader } from './PageHeader.tsx';
-import type { Discussion, DiscussionsOrdering } from '../discussions/types.ts';
+import type { Thread, ThreadsOrdering } from '../discussions/types.ts';
 import { pluralize } from '../utils.ts';
 
 interface OrderingSelectProps {
-	ordering: DiscussionsOrdering;
+	ordering: ThreadsOrdering;
 }
 
 const OrderingSelect = ({ ordering }: OrderingSelectProps) => (
@@ -22,7 +22,7 @@ const OrderingSelect = ({ ordering }: OrderingSelectProps) => (
 
 interface ResultsFormProps {
 	url: URL;
-	ordering: DiscussionsOrdering;
+	ordering: ThreadsOrdering;
 }
 
 const ResultsForm = ({ url, ordering }: ResultsFormProps) => (
@@ -51,13 +51,13 @@ const ResultsForm = ({ url, ordering }: ResultsFormProps) => (
 );
 
 interface ResultsPageProps {
-	discussions: Discussion[];
+	threads: Thread[];
 	url: URL;
-	ordering: DiscussionsOrdering;
+	ordering: ThreadsOrdering;
 }
 
 export const ResultsPage = ({
-	discussions,
+	threads,
 	url,
 	ordering,
 }: ResultsPageProps) => (
@@ -70,8 +70,8 @@ export const ResultsPage = ({
 			</div>
 
 			<p class='pb-4 text-sm text-center truncate'>
-				{discussions.length}{' '}
-				{pluralize(discussions.length, 'discussion', 'discussions')}
+				{threads.length}{' '}
+				{pluralize(threads.length, 'discussion', 'discussions')}
 				{' for '}
 				<a href={url.href} class='underline'>
 					<strong>
@@ -83,9 +83,9 @@ export const ResultsPage = ({
 			</p>
 
 			<ul class='divide-y divide-gray-200 '>
-				{discussions.map((d) => (
+				{threads.map((t) => (
 					<li class='py-2'>
-						<DiscussionItem discussion={d} />
+						<ThreadItem thread={t} />
 					</li>
 				))}
 			</ul>

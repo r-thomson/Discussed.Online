@@ -1,4 +1,4 @@
-import type { DiscussionSite } from './types.ts';
+import type { Forum } from './types.ts';
 import { cacheResult } from '../cache.ts';
 import { pick } from '../utils.ts';
 
@@ -11,7 +11,7 @@ export default {
 		default: ({ url }) => url.hostname + url.pathname + url.search,
 	},
 
-	async getDiscussionsForUrl(match, { ordering = 'popular', settings }) {
+	async findThreadsForUrl(match, { ordering = 'popular', settings }) {
 		const query = match.visit(this.searchBuilderVisitor);
 		const data = await searchStories(query, {
 			restrictSearchableAttributes: 'url',
@@ -40,7 +40,7 @@ export default {
 			dateSubmitted: new Date(hit.created_at),
 		}));
 	},
-} satisfies DiscussionSite;
+} satisfies Forum;
 
 async function searchStories(
 	query: string,

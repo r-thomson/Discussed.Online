@@ -1,4 +1,4 @@
-import type { DiscussionSite } from './types.ts';
+import type { Forum } from './types.ts';
 import { cacheResult } from '../cache.ts';
 import { AsyncLock, basicAuth } from '../utils.ts';
 
@@ -14,7 +14,7 @@ export default {
 			`url:${url.hostname}${url.pathname}${url.search} site:${url.hostname}`,
 	},
 
-	async getDiscussionsForUrl(match, { ordering = 'popular', settings }) {
+	async findThreadsForUrl(match, { ordering = 'popular', settings }) {
 		const query = match.visit(this.searchBuilderVisitor);
 		const data = await searchLinks(query, {
 			sort: ordering === 'recent' ? 'new' : 'comments',
@@ -43,7 +43,7 @@ export default {
 			dateSubmitted: new Date(child.data.created_utc * 1000),
 		}));
 	},
-} satisfies DiscussionSite;
+} satisfies Forum;
 
 interface AccessTokenResponse {
 	access_token: string;
