@@ -1,10 +1,10 @@
 {
   "version": "5",
   "specifiers": {
-    "jsr:@hono/hono@4.9.10": "4.9.10",
     "jsr:@std/assert@1.0.15": "1.0.15",
     "jsr:@std/assert@^1.0.15": "1.0.15",
     "jsr:@std/async@1.0.15": "1.0.15",
+    "jsr:@std/async@^1.0.15": "1.0.15",
     "jsr:@std/data-structures@^1.0.9": "1.0.9",
     "jsr:@std/encoding@1.0.10": "1.0.10",
     "jsr:@std/fs@1.0.19": "1.0.19",
@@ -16,18 +16,17 @@
     "jsr:@std/path@^1.1.1": "1.1.2",
     "jsr:@std/path@^1.1.2": "1.1.2",
     "jsr:@std/testing@1.0.16": "1.0.16",
+    "npm:@hono/ua-blocker@0.1.14": "0.1.14_hono@4.10.3",
     "npm:@types/node@*": "18.16.19",
     "npm:autoprefixer@10.4.21": "10.4.21_postcss@8.5.6",
     "npm:date-fns@4.0.0": "4.0.0",
     "npm:date-fns@4.1.0": "4.1.0",
+    "npm:hono@4.10.3": "4.10.3",
     "npm:postcss@8.5.6": "8.5.6",
     "npm:redis@4.7.0": "4.7.0_@redis+client@1.6.0",
     "npm:tailwindcss@3.4.10": "3.4.10_postcss@8.5.6"
   },
   "jsr": {
-    "@hono/hono@4.9.10": {
-      "integrity": "b416cf3bf42e33353e37ea13df409b08bd9a67fabc5fca630f76924fbadb01e5"
-    },
     "@std/assert@1.0.15": {
       "integrity": "d64018e951dbdfab9777335ecdb000c0b4e3df036984083be219ce5941e4703b",
       "dependencies": [
@@ -63,6 +62,7 @@
       "integrity": "a917ffdeb5924c9be436dc78bc32e511760e14d3a96e49c607fc5ecca86d0092",
       "dependencies": [
         "jsr:@std/assert@^1.0.15",
+        "jsr:@std/async@^1.0.15",
         "jsr:@std/data-structures",
         "jsr:@std/fs@^1.0.19",
         "jsr:@std/internal@^1.0.12",
@@ -73,6 +73,12 @@
   "npm": {
     "@alloc/quick-lru@5.2.0": {
       "integrity": "sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw=="
+    },
+    "@hono/ua-blocker@0.1.14_hono@4.10.3": {
+      "integrity": "sha512-qMbmb6kn5cjSGvG81r2WC8iOqBk4mQ/UMF5Wru7WEnR6CfzTLNRINBA99dxO4wRk8E4j8w7KEEACUylkAqWNyA==",
+      "dependencies": [
+        "hono"
+      ]
     },
     "@isaacs/cliui@8.0.2": {
       "integrity": "sha512-O8jcjabXaleOG9DQ0+ARXWZBTfnP4WNAqzuiJK7ll44AmxGKv/J2M4TPjxjY3znBCfvBXFzucm1twdyFybFqEA==",
@@ -382,6 +388,9 @@
       "dependencies": [
         "function-bind"
       ]
+    },
+    "hono@4.10.3": {
+      "integrity": "sha512-2LOYWUbnhdxdL8MNbNg9XZig6k+cZXm5IjHn2Aviv7honhBMOHb+jxrKIeJRZJRmn+htUCKhaicxwXuUDlchRA=="
     },
     "is-binary-path@2.1.0": {
       "integrity": "sha512-ZMERYes6pDydyuGidse7OsHxtbI7WVeUEozgR/g7rd0xUimYNlvZRE/K2MgZTjWy725IfelLeVcEM97mmtRGXw==",
@@ -882,15 +891,16 @@
   },
   "workspace": {
     "dependencies": [
-      "jsr:@hono/hono@4.9.10",
       "jsr:@std/assert@1.0.15",
       "jsr:@std/async@1.0.15",
       "jsr:@std/encoding@1.0.10",
       "jsr:@std/fs@1.0.19",
       "jsr:@std/path@1.1.2",
       "jsr:@std/testing@1.0.16",
+      "npm:@hono/ua-blocker@0.1.14",
       "npm:autoprefixer@10.4.21",
       "npm:date-fns@4.1.0",
+      "npm:hono@4.10.3",
       "npm:postcss@8.5.6",
       "npm:redis@4.7.0",
       "npm:tailwindcss@3.4.10"

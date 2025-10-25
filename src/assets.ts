@@ -16,7 +16,7 @@ interface MakeAssetsMiddlewareOptions {
 
 interface AssetProcessor {
 	glob: string;
-	process(data: Uint8Array): Promise<Uint8Array>;
+	process(data: Uint8Array): Promise<Uint8Array<ArrayBuffer>>;
 }
 
 interface AssetsMiddleware {
