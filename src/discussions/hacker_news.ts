@@ -44,6 +44,12 @@ export const HackerNews: Forum = {
 			dateSubmitted: new Date(hit.created_at),
 		}));
 	},
+
+	getSubmitUrl(url: string) {
+		const result = new URL('https://news.ycombinator.com/submitlink');
+		result.searchParams.set('u', url);
+		return result.href;
+	},
 };
 
 async function searchStories(

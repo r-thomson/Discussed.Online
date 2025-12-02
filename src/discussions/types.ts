@@ -12,6 +12,9 @@ export interface Forum {
 		ordering?: ThreadsOrdering;
 		settings: RequestSettings;
 	}): Promise<Thread[]>;
+	getSubmitUrl?: (url: string, options: {
+		settings: RequestSettings;
+	}) => string;
 }
 
 /** A Thread is an individual posting of a given URL to a Forum. */

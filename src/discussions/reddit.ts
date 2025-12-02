@@ -2,7 +2,7 @@ import type { Forum } from './types.ts';
 import { cacheResult } from '../cache.ts';
 import { RedditIcon } from '../components/icons.tsx';
 import tailwindTheme from '../tailwind_theme.ts';
-import { AsyncLock, basicAuth } from '../utils.ts';
+import { AsyncLock, basicAuth, unreachable } from '../utils.ts';
 
 export const Reddit: Forum = {
 	name: 'Reddit',
@@ -47,6 +47,23 @@ export const Reddit: Forum = {
 			submittedUrl: child.data.url,
 			dateSubmitted: new Date(child.data.created_utc * 1000),
 		}));
+	},
+
+	getSubmitUrl(url: string, { settings }) {
+		let result: URL;
+		switch (settings.reddit) {
+			case 'reddit.com':
+				result = new URL('https://www.reddit.com/submit?resubmit=true');
+				break;
+			case 'old.reddit.com':
+				result = new URL('https://old.reddit.com/submit?resubmit=true');
+				break;
+			default:
+				unreachable(settings.reddit);
+		}
+
+		result.searchParams.set('url', url);
+		return result.href;
 	},
 };
 
