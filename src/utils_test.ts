@@ -7,7 +7,7 @@ import {
 } from '@std/assert/';
 import { delay } from '@std/async';
 import '@std/testing/time/';
-import { AsyncLock, basicAuth, pick, pluralize } from './utils.ts';
+import { AsyncLock, basicAuth, pick, pluralize, unreachable } from './utils.ts';
 
 Deno.test('AsyncLock.acquire() resolves when callback resolves', async () => {
 	const lock = new AsyncLock();
@@ -205,4 +205,29 @@ Deno.test('pluralize()', () => {
 	assertEquals(pluralize(0, 'person', 'people'), 'people');
 	assertEquals(pluralize(1, 'person', 'people'), 'person');
 	assertEquals(pluralize(2, 'person', 'people'), 'people');
+});
+
+Deno.test('unreachable()', () => {
+	type Answer = 'yes' | 'no';
+
+	((answer: Answer): boolean => {
+		switch (answer) {
+			case 'yes':
+				return true;
+			case 'no':
+				return false;
+			default:
+				unreachable(answer);
+		}
+	});
+
+	((answer: Answer): boolean => {
+		switch (answer) {
+			case 'yes':
+				return true;
+			default:
+				// @ts-expect-error: assertion
+				unreachable(answer);
+		}
+	});
 });

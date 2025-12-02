@@ -87,3 +87,8 @@ export function pluralize(
 ): string {
 	return quantity === 1 ? singular : plural;
 }
+
+/** Type utility for exhaustiveness checking. */
+export function unreachable(value: never): never {
+	throw new TypeError(`Unreachable ('${value}')`);
+}
