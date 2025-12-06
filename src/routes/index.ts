@@ -51,7 +51,7 @@ async function renderThreads(url: URL, c: Context) {
 		.flatMap((result) => result.value);
 	threads = sortThreads(threads, ordering);
 
-	return c.render(ResultsPage({ threads, url, ordering }));
+	return c.render(ResultsPage({ threads, url, ordering, settings }));
 }
 
 function parseOrdering(value: string): ThreadsOrdering | undefined {

@@ -2,8 +2,10 @@ import { html } from 'hono/html';
 import { ThreadItem } from './ThreadItem.tsx';
 import { Button, Select } from './forms.tsx';
 import { PageHeader } from './PageHeader.tsx';
+import * as forums from '../discussions/forums.ts';
 import type { Thread, ThreadsOrdering } from '../discussions/types.ts';
-import { pluralize } from '../utils.ts';
+import { RequestSettings } from '../middleware/settings.ts';
+import { pluralize, toIntlSeparatedList } from '../utils.ts';
 
 interface OrderingSelectProps {
 	ordering: ThreadsOrdering;
@@ -54,12 +56,14 @@ interface ResultsPageProps {
 	threads: Thread[];
 	url: URL;
 	ordering: ThreadsOrdering;
+	settings: RequestSettings;
 }
 
 export const ResultsPage = ({
 	threads,
 	url,
 	ordering,
+	settings,
 }: ResultsPageProps) => (
 	<>
 		<PageHeader urlFormValue={url.href} />
@@ -89,6 +93,23 @@ export const ResultsPage = ({
 					</li>
 				))}
 			</ul>
+
+			<p class='pt-4 text-sm text-center'>
+				Submit to: {toIntlSeparatedList(
+					Object.values(forums).filter((forum) =>
+						!!forum.getSubmitUrl
+					).map((forum) => (
+						<a
+							href={forum.getSubmitUrl!(url.href, { settings })}
+							target='_blank'
+							class='text-blue-800 hover:underline'
+						>
+							{forum.name}
+						</a>
+					)),
+					{ type: 'unit' },
+				)}
+			</p>
 		</main>
 	</>
 );
