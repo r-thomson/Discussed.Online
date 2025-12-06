@@ -7,7 +7,14 @@ import {
 } from '@std/assert/';
 import { delay } from '@std/async';
 import '@std/testing/time/';
-import { AsyncLock, basicAuth, pick, pluralize, unreachable } from './utils.ts';
+import {
+	AsyncLock,
+	basicAuth,
+	pick,
+	pluralize,
+	toIntlSeparatedList,
+	unreachable,
+} from './utils.ts';
 
 Deno.test('AsyncLock.acquire() resolves when callback resolves', async () => {
 	const lock = new AsyncLock();
@@ -141,6 +148,19 @@ Deno.test('basicAuth()', () => {
 	assertEquals(
 		basicAuth('aladdin', 'opensesame'),
 		'Basic YWxhZGRpbjpvcGVuc2VzYW1l',
+	);
+});
+
+Deno.test('toIntlSeparatedList()', () => {
+	const item1 = Symbol();
+	const item2 = Symbol();
+	const item3 = Symbol();
+
+	assertEquals(
+		toIntlSeparatedList([item1, item2, item3], {
+			type: 'conjunction',
+		}),
+		[item1, ', ', item2, ', and ', item3],
 	);
 });
 

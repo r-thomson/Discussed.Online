@@ -62,6 +62,29 @@ export function dataUrlFromSvg(element: JSX.Element): string {
 	}")`;
 }
 
+/**
+ * Add `Intl.ListFormat` separators between each element of an array.
+ * @param items An array of arbitrary values
+ * @param options `Intl.ListFormat` options and locales
+ */
+export function toIntlSeparatedList<T>(
+	items: T[],
+	options?: Intl.ListFormatOptions & { locales?: Intl.LocalesArgument },
+): (T | string)[] {
+	const fmt = new Intl.ListFormat(options?.locales, options);
+
+	const listParts = fmt.formatToParts(items.keys().map(String));
+	return listParts.map((part) => {
+		if (part.type === 'element') {
+			return items[Number(part.value)];
+		} else if (part.type === 'literal') {
+			return part.value;
+		} else {
+			unreachable(part.type);
+		}
+	});
+}
+
 /** Return a new object with the chosen keys of the provided object. */
 export function pick<T extends object, K extends keyof T = never>(
 	object: T,
