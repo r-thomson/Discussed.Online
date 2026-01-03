@@ -6,6 +6,7 @@ if (SENTRY_DSN) {
 	Sentry.init({
 		dsn: SENTRY_DSN,
 		sendDefaultPii: true,
+		tracesSampleRate: 1.0,
 		enableLogs: true,
 	});
 }
