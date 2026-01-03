@@ -17,7 +17,7 @@
 		"tailwindcss": "npm:tailwindcss@3.4.10"
 	},
 	"tasks": {
-		"start": "deno run --permission-set --env --watch --preload instrumentation.ts main.ts",
+		"start": "deno run --permission-set --env --preload instrumentation.ts main.ts --watch",
 		"test": "deno test src/"
 	},
 	"lint": {

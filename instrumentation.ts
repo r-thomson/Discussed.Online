@@ -9,4 +9,6 @@ if (SENTRY_DSN) {
 		tracesSampleRate: 1.0,
 		enableLogs: true,
 	});
+
+	console.log('Sentry SDK initialized');
 }
