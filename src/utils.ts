@@ -111,6 +111,19 @@ export function pluralize(
 	return quantity === 1 ? singular : plural;
 }
 
+export function shuffle<T>(array: T[]): void {
+	for (let i = array.length - 1; i >= 1; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[array[i], array[j]] = [array[j], array[i]];
+	}
+}
+
+export function toShuffled<T>(array: T[]): T[] {
+	const shuffled = [...array];
+	shuffle(shuffled);
+	return shuffled;
+}
+
 /** Type utility for exhaustiveness checking. */
 export function unreachable(value: never): never {
 	throw new TypeError(`Unreachable ('${value}')`);
