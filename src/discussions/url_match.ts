@@ -14,6 +14,21 @@ export function matchUrl(url: URL): MatchedUrl {
 		matchAnyUrl(url);
 }
 
+export function matchSubstackPostUrl(url: URL): MatchedUrl | undefined {
+	if (/\.substack\.com$/.test(url.hostname) && /^\/p\//.test(url.pathname)) {
+		url = new URL(url);
+		url.search = '';
+
+		return {
+			url,
+			visit(visitor) {
+				return visitor.visitSubstackPost?.(this) ??
+					visitor.default(this);
+			},
+		};
+	}
+}
+
 export function matchTtvClipUrl(url: URL): MatchedTtvClip | undefined {
 	if (/(^|\.)clips\.twitch\.tv$/.test(url.hostname)) {
 		const match = url.pathname.match(/^\/(\w+)(?:-[\w-]+)?/);

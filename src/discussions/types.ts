@@ -43,6 +43,7 @@ It's a little OOP-y for my JavaScript tastes, but it gets the job done.
 */
 
 export interface SearchBuilderVisitor {
+	visitSubstackPost?: (match: MatchedSubstackPost) => string | undefined;
 	visitTtvClip?: (match: MatchedTtvClip) => string | undefined;
 	visitTweet?: (match: MatchedTweet) => string | undefined;
 	visitYouTube?: (match: MatchedYouTube) => string | undefined;
@@ -53,6 +54,8 @@ export interface MatchedUrl {
 	visit(visitor: SearchBuilderVisitor): string;
 	url: URL;
 }
+
+export interface MatchedSubstackPost extends MatchedUrl {}
 
 export interface MatchedTtvClip extends MatchedUrl {
 	id: string;

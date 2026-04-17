@@ -1,5 +1,19 @@
 import { assertEquals } from '@std/assert/';
-import { matchTtvClipUrl } from './url_match.ts';
+import { matchSubstackPostUrl, matchTtvClipUrl } from './url_match.ts';
+
+Deno.test('Match *.substack.com/p/ URL', () => {
+	const testCases = [
+		[
+			'https://example.substack.com/p/lorem-ipsum-dolor-sit-amet?utm_source=post-email-title&publication_id=1234&post_id=56789',
+			'https://example.substack.com/p/lorem-ipsum-dolor-sit-amet',
+		],
+	];
+
+	for (const [url, cleanUrl] of testCases) {
+		const match = matchSubstackPostUrl(new URL(url));
+		assertEquals(match?.url?.href, cleanUrl);
+	}
+});
 
 Deno.test('Match clips.twitch.tv URL', () => {
 	const testCases = [
