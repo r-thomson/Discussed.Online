@@ -13,7 +13,7 @@ export const Reddit: Forum = {
 		visitTtvClip: ({ id }) => `url:${id} site:twitch.tv`,
 		visitTweet: ({ id }) => `url:${id} (site:twitter.com OR site:x.com)`,
 		visitYouTube: ({ v }) =>
-			`url:"${v}" (site:youtube.com OR site:youtu.be)`,
+			`(url:"${v}" (site:youtube.com OR site:youtu.be)) OR selftext:"https://www.youtube.com/watch?v=${v}" OR selftext:"https://youtu.be/${v}"`,
 		default: ({ url }) =>
 			`url:${url.hostname}${url.pathname}${url.search} site:${url.hostname}`,
 	},
