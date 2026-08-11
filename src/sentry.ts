@@ -9,8 +9,8 @@ export function initSentry(app: Hono) {
 	app.use(
 		sentry(app, {
 			dsn: SENTRY_DSN,
-			sendDefaultPii: true,
 			tracesSampleRate: 1.0,
+			ignoreTransactions: [/^[A-Z]+ \/healthz$/],
 			enableLogs: true,
 		}),
 	);
