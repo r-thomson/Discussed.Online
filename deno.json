@@ -2,7 +2,8 @@
 	"$schema": "https://deno.land/x/deno/cli/schemas/config-file.v1.json",
 	"imports": {
 		"@hono/ua-blocker": "npm:@hono/ua-blocker@0.1.14",
-		"@sentry/deno": "npm:@sentry/deno@10.32.1",
+		"@sentry/deno": "npm:@sentry/deno@10.70.0",
+		"@sentry/hono": "npm:@sentry/hono@10.70.0",
 		"@std/assert": "jsr:@std/assert@1.0.15",
 		"@std/async": "jsr:@std/async@1.0.15",
 		"@std/encoding": "jsr:@std/encoding@1.0.10",
@@ -17,7 +18,7 @@
 		"tailwindcss": "npm:tailwindcss@3.4.10"
 	},
 	"tasks": {
-		"start": "deno run --permission-set --env --preload instrumentation.ts main.ts --watch",
+		"start": "deno run --permission-set --env --watch main.ts",
 		"test": "deno test src/"
 	},
 	"lint": {

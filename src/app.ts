@@ -8,18 +8,19 @@ import { trimTrailingSlash } from 'hono/trailing-slash';
 import { serveAssets } from './assets.ts';
 import Document from './components/Document.tsx';
 import { Error404, Error500 } from './components/errors.tsx';
-import { sentryMiddleware } from './middleware/sentry.ts';
 import { settingsMiddleware } from './middleware/settings.ts';
 import healthz from './routes/healthz.ts';
 import index from './routes/index.ts';
 import robots from './routes/robots.ts';
 import settings from './routes/settings.ts';
+import { initSentry } from './sentry.ts';
 
 const app = new Hono({
 	router: new TrieRouter(),
 });
 
-app.use(sentryMiddleware);
+initSentry(app);
+
 app.use(logger());
 app.use(uaBlocker({ blocklist: aiBots }));
 app.use(trimTrailingSlash());
