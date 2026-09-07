@@ -2,7 +2,6 @@ import { uaBlocker } from '@hono/ua-blocker';
 import { aiBots } from '@hono/ua-blocker/ai-bots';
 import { Hono } from 'hono';
 import { jsxRenderer } from 'hono/jsx-renderer';
-import { logger } from 'hono/logger';
 import { TrieRouter } from 'hono/router/trie-router';
 import { trimTrailingSlash } from 'hono/trailing-slash';
 import { serveAssets } from './assets.ts';
@@ -21,7 +20,6 @@ const app = new Hono({
 
 initSentry(app);
 
-app.use(logger());
 app.use(uaBlocker({ blocklist: aiBots }));
 app.use(trimTrailingSlash());
 app.use(jsxRenderer(Document));
